@@ -14,7 +14,7 @@ const Calendar = () => {
     "July", "August", "September", "October", "November", "December"
   ];
 
-  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekDays = ["Sn", "M", "T", "W", "Th", "F", "S"];
 
   const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
   const firstDayIndex = new Date(selectedYear, selectedMonth, 1).getDay();
@@ -41,12 +41,12 @@ const Calendar = () => {
   return (
     <div className="calendar-wrapper">
       <div className="calendar-header">
-        <h2>Calendar</h2>
+        <p className="fontdiner-swanky-regular">Calendar</p>
 
         <select
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(Number(e.target.value))}
-          className="month-dropdown"
+          className="month-dropdown fontdiner-swanky-regular"
         >
           {months.map((month, index) => (
             <option key={month} value={index}>
@@ -58,7 +58,7 @@ const Calendar = () => {
 
       <div className="weekday-row">
         {weekDays.map((day) => (
-          <div key={day} className="weekday">
+          <div key={day} className="weekday fontdiner-swanky-regular">
             {day}
           </div>
         ))}

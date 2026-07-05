@@ -13,7 +13,6 @@ function EventCategoryHold({ contentType, arrObjs, onOpenModal }) {
     >
       <div className="eventNavSm">
         <h3 className="topicEvt fontdiner-swanky-regular">{contentType}</h3>
-        <p className="browser">Browse All</p>
       </div>
       <div className="specificEvent">
         {arrObjs.map((tinyEv, index) => {
