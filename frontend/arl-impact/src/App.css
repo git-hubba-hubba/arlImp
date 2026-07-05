@@ -1,0 +1,865 @@
+.calendar-wrapper {
+  max-width: 850px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #111;
+  color: white;
+  border-radius: 18px;
+  font-family: Arial, sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.month-dropdown {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.weekday-row,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.weekday {
+  text-align: center;
+  font-weight: bold;
+  padding: 12px;
+  color: #aaa;
+}
+
+.calendar-day {
+  height: 95px;
+  border: 1px solid #333;
+  background: #1c1c1c;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.calendar-day:hover {
+  background: #333;
+  transform: scale(1.02);
+}
+
+.empty-day {
+  background: #090909;
+  cursor: default;
+}
+
+.empty-day:hover {
+  transform: none;
+  background: #090909;
+}
+
+.event-textarea {
+  width: 100%;
+  height: 120px;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  resize: none;
+  font-size: 1rem;
+}
+
+.save-btn {
+  margin-top: 16px;
+  padding: 12px 18px;
+  border: none;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transition: opacity 250ms ease;
+
+  z-index: 9999;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+}
+
+.modal-container {
+  width: 80vw;
+  max-width: 1200px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  position: relative;
+
+  transform: scale(.95);
+  opacity: 0;
+
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+.modal-container.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  right: 18px;
+  top: 14px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 28px;
+  cursor: pointer;
+
+  color: #666;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+.modal-content {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95vw;
+    padding: 18px;
+  }
+}
+/* --------------------------{3rdP} */
+body {
+  width: 100vw;
+  height: 4444vh;
+  font-family: serif;
+}
+.fontdiner-swanky-regular {
+  font-family: "Fontdiner Swanky", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.masterJmwofford {
+  /* border: 0.2px solid red; */
+  margin: 0.2em;
+  display: flex;
+  justify-content: space-evenly;
+  /* height: 4444vh; */
+}
+.impactLogo {
+  height: 60px;
+  width: 90%;
+  padding: 5px;
+}
+.navIcon {
+  padding: 5px;
+  /* border-radius:50%; */
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.navIcon:hover {
+  padding: 5px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: peru;
+}
+.navMain {
+  /* border: 0.2px solid black; */
+  /* height:12vh; */
+}
+.navTriFold {
+  /* border: solid peru; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.nFold1 {
+  /* border:solid black; */
+  width: 23%;
+}
+.nFold2 {
+  /* border: .2px solid blue; */
+  width: 43%;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 12px;
+  color: black;
+}
+.nFold3 {
+  /* border: .2px solid red; */
+  padding: 3px;
+  width: 33%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.profileWidget {
+  border: 0.2px solid black;
+  height: 18vh;
+  margin: 1em;
+  border-radius: 22px;
+  align-items: center;
+  padding: 1em;
+}
+.filled {
+  background-color: navy;
+}
+.lilTracker {
+  /* border:solid gold; */
+  width: 33%;
+}
+.trackbarMajor {
+  border: 0.2px solid black;
+  display: flex;
+  height: 6px;
+  margin: 4px;
+}
+.pointCounter {
+  color: lightblue;
+}
+.ewContainer {
+  border: 0.6px solid black;
+  margin: 1em;
+  /* height:44vh; */
+  border-radius: 22px;
+  /* color:black; */
+  padding: 1em;
+}
+.topEvt {
+  font-weight: bold;
+}
+.btmEvt {
+  text-align: right;
+}
+.bizImg {
+  width: 30px;
+  /* border:solid black; */
+  /* border-radius:50%; */
+  padding: 6px;
+}
+.bizPieceMajor {
+  border: 0.2px solid black;
+  margin-top: 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.bizNombre {
+  font-size: 11px;
+}
+.sliceevt {
+  /* color:black; */
+  margin-top: 1em;
+  text-align: left;
+}
+.mpactTeam {
+  width: 100%;
+}
+.joinNowContainer {
+  padding: 1em;
+}
+.joinMax {
+  color: lightblue;
+}
+.btnContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+.signUp {
+  color:lightblue;
+  border: solid lightblue;
+  width: 40%;
+  background: white;
+  cursor: pointer;
+  padding: 0.5em;
+}
+.signUp:hover {
+  border: solid lightblue;
+  width: 40%;
+  background-color: lightblue;
+  color: white;
+}
+.sliverComp {
+  border: 0.2px solid grey;
+  display: flex;
+  /* padding: 1em; */
+  justify-content: space-around;
+  margin: 1em;
+  border-radius: 12px;
+  align-items: center;
+}
+.descSliver {
+  padding: 1em;
+}
+.sliverIcon {
+  height: 30px;
+}
+.splitA {
+  width: 50%;
+}
+.mediaSplitContainer {
+  border: solid lightblue;
+}
+.quadContainer {
+  /* border: .2px solid grey; */
+  margin-top: 2em;
+  /* height:44vh; */
+}
+.quadSep {
+  display: flex;
+  height: 50%;
+}
+.qImg {
+  width: 100%;
+}
+.quadScreen {
+  /* border:.2px solid lightblue; */
+  margin: 1em;
+  color: black;
+}
+.thisQuad {
+  border: 0.2px solid navy;
+  width: 50%;
+  margin: 0.2em;
+  color:black;
+}
+.thisQuad:hover {
+  border: 0.2px solid navy;
+  width: 50%;
+  margin: 0.2em;
+  color:black;  background-color: lightblue;
+}
+.flyerIm {
+  border: solid black;
+  width: 90%;
+}
+.logoBearer {
+  width: 80%;
+  margin: 1em;
+}
+.channelSymbs {
+  border: 0.2px solid black;
+  padding: 3px;
+  width: 20%;
+  height: 100%;
+  /* background-color: lightblue; */
+}
+.channelIcon {
+  border: 0.4px solid black;
+  height: 20px;
+  width: 20px;
+  margin: 0.4em;
+  border-radius: 12px;
+}
+.channelScaffold {
+  width: 80%;
+}
+.leftPanel {
+  display: flex;
+}
+.usernameHolder {
+  /* border: .2px solid black; */
+  margin: 0.6em;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+.smIcon {
+  width: 15px;
+  height: 15px;
+  /* border: .2px solid black; */
+  border-radius: 50%;
+}
+.flexer {
+  /* margin-top:2.2em; */
+  color: black;
+  opacity: 0.3;
+  display: flex;
+  font-size: 12px;
+  text-align: right;
+  /* padding:1em; */
+}
+.flexer2 {
+  /* margin-top:2.2em; */
+  color: black;
+  /* opacity: 0.3; */
+  display: flex;
+  font-size: 12px;
+  text-align: right;
+  align-items: center;
+  /* padding:1em; */
+}
+.eventSplashImg {
+  width: 100%;
+  /* height:22vh; */
+}
+.mainPostContainer {
+  /* border: .2px solid black; */
+  height: 444vh;
+}
+.singlePost {
+  border: solid grey;
+  margin: 2em;
+  border-radius: 8px;
+  /* height:44vh; */
+}
+.topicPost {
+  margin: 0.4em;
+}
+.channelMaintain {
+  border: 0.2px solid black;
+  margin-top: 1em;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 8px;
+}
+.channelMaintain:hover {
+  border: 0.2px solid black;
+  margin-top: 1em;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 8px;
+  background-color: lightblue;
+  color: black;
+}
+.btnPostContainer {
+  /* border:solid black; */
+  /* height:10%; */
+}
+.spScreen {
+  /* border:solid black; */
+  border-radius: 12px;
+  height: 70%;
+}
+.postImgContent {
+  width: 100%;
+  height: 100%;
+  /* border-radius:12px; */
+}
+.btnEveryPost {
+  margin: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+.btnCol {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 22%;
+}
+.colName {
+  font-size: 14px;
+}
+.postTitle {
+  font-size: 18px;
+  margin: 1em;
+}
+.postButton {
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 50%;
+  width: 20px;
+}
+.postButton:hover {
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 50%;
+  width: 20px;
+  background-color: lightblue;
+}
+.evntSplashName {
+  color: lightblue;
+}
+.eventNavSm {
+  border: 0.2px solid black;
+  /* height:13vh; */
+  /* padding:1em; */
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: lightblue;
+  color: black;
+}
+.topicEvt {
+  /* border: .8px solid black; */
+  /* background-color:lightblue; */
+  color: black;
+  font-size: 22px;
+  width: 90%;
+  text-align: left;
+}
+.specificEvent {
+  /* border: .2px solid lightblue; */
+  /* height:22vh; */
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.smEventShowContainer {
+  border: 0.2px solid black;
+  /* display:flex; */
+  width: 40%;
+  padding: 10px;
+  margin: 0.4em;
+  cursor: pointer;
+  /* border-radius:12px; */
+}
+.smShowImg {
+  width: 100%;
+  /* height:90px; */
+  /* margin:1em; */
+  /* border-radius:12px;; */
+}
+.smTopicSay {
+  text-align: left;
+  font-size: 14px;
+  color: black;
+}
+.smDateSay {
+  text-align: right;
+  font-size: 14px;
+}
+.walkWitMe {
+  width: 100%;
+}
+.memPic {
+  width: 100%;
+}
+.fancyName {
+  color: lightblue;
+  font-size: 42px;
+  margin: 1em;
+}
+.postNavigation {
+  /* border: 0.2px solid black; */
+  /* height: 18vh; */
+  width: 100%;
+  /* background-color:lightblue; */
+}
+.btnsocialHolster {
+  /* border:.2px solid black; */
+  /* height: 33px; */
+  display: flex;
+  justify-content: space-evenly;
+}
+.iconSocial {
+  width: 30px;
+}
+.btnTag {
+  font-size: 10px;
+}
+
+.memwidTitle {
+  color: lightblue;
+  text-align: right;
+}
+.friendCrawlContainer {
+  /* border:.2px solid black; */
+  margin: 1em;
+  /* height:44vh; */
+}
+.fcContainer {
+  /* border: .2px solid black; */
+  border-radius: 9px;
+  margin: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.fcContainer:hover {
+  border: 0.2px solid white;
+  border-radius: 9px;
+  margin: 1em;
+  display: flex;
+  color: black;
+  align-items: center;
+  background-color: lightblue;
+  justify-content: space-around;
+}
+.fprofImg {
+  height: 60px;
+  border: solid lightblue;
+  border-radius: 50%;
+}
+.boxMem {
+  border: solid lightblue;
+  margin: 0.5em;
+  border-radius: 12px;
+  width: 150px;
+  cursor: pointer;
+  /* height:250px; */
+  /* color:black; */
+  /* background-color:lightblue; */
+}
+.boxMem:hover {
+  border: solid peru;
+  margin: 0.5em;
+  border-radius: 12px;
+  color: peru;
+  /* background-color:lightblue; */
+  width: 150px;
+  /* height:250px; */
+}
+
+.boxImg {
+  border: solid lightblue;
+  border-radius: 50%;
+  width: 60px;
+}
+.namer {
+  color: lightblue;
+  padding: 0.3em;
+}
+.boxMem {
+}
+.bmRight {
+  border: solid black;
+}
+.memberDashHolster {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.adspaceimg{
+  width: 100%;
+}
+.modalDetail {
+  color: black;
+  font-size: 16px;
+}
+.modalDetailSplit {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+.modalDetailImg {
+  border: solid lightblue;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  padding:1em;
+}
+.modalEventImg {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+}
+.modalEyebrow {
+  color: lightblue;
+  font-weight: bold;
+}
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+.notificationItem {
+  border: 0.2px solid lightblue;
+  padding: 0.75em;
+}
+.notificationTime {
+  color: #666;
+  font-size: 12px;
+}
+.formFitting{
+  border:solid black;
+  border-radius:22px;
+  background-color:lightblue;
+  display:flex;
+  align-items: center;
+}
+.blqForm{
+  width:200px;
+  /* height:200px; */
+  margin:1em;
+  /* border-radius:50%; */
+  border:solid white;
+}
+.frmSU{
+  border: .8 solid black;
+  background-color: white;
+  border-radius:12px;
+  text-align:center;
+  width:65%;
+  margin:1em;
+  color:peru;
+}
+.formSubmit {
+  margin: 0.5em;
+}
+.formStatus {
+  color: peru;
+  font-size: 14px;
+  margin: 0.75em;
+}
+.profileEditForm,
+.crudForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin: 1em;
+}
+.profileAction {
+  width: auto;
+  margin: 0.25em;
+}
+.crudPanel {
+  border: 0.2px solid lightblue;
+  margin: 1em;
+  padding: 1em;
+}
+.modalCrudPanel {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.crudTextarea {
+  min-height: 90px;
+  resize: vertical;
+}
+.crudList {
+  margin: 1em;
+}
+.crudListItem {
+  border: 0.2px solid lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  margin: 0.5em 0;
+  padding: 0.5em;
+}
+.modalDetail{
+  border:solid lightblue;
+  border-radius:12px;
+  padding: 1em;
+  /* display:flex; */
+  justify-content: space-evenly;
+  margin:1em;
+}
+.userProfImg{
+  height:150px;
+  /* width:250px; */
+  border-radius:12px;
+}
+.profileCan{
+  /* border:solid black; */
+  padding:1em;
+  /* display:flex; */
+  align-items: center;
+}
+.proCanDesc{
+  /* border:solid black; */
+  width:100%;
+  margin:1em;
+
+}
+.procanTitle{
+  color:lightblue;
+}
+.openProContainer{
+  border:solid lightblue;
+  height:32vh;
+}.smedPro{
+  height:90px;
+  margin:1em;
+}
+/* --------------------------{GENERAL} */
+@media (max-width: 2280px) {
+  body {
+    background-color: white;
+  }
+  .leftPanel {
+    /* border: solid peru; */
+    /* display: block; */
+    background-color: rgb(231, 238, 240);
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+    color: black;
+  }
+  .midPanel {
+    border: 0.2px solid black;
+    width: 50%;
+    display: block;
+  }
+  .rightPanel {
+    /* border: solid blue; */
+    display: block;
+    width: 30%;
+  }
+}
+@media (max-width: 1250px) {
+  body {
+    background-color: white;
+  }
+  .leftPanel {
+    border: solid peru;
+    display: none;
+  }
+  .midPanel {
+    border: 0.2px solid black;
+    width: 70%;
+    display: block;
+  }
+  .rightPanel {
+    border: solid white;
+    display: block;
+    width: 30%;
+  }
+}
+@media (max-width: 850px) {
+  body {
+    background-color: white;
+  }
+  .leftPanel {
+    border: solid peru;
+    display: none;
+  }
+  .midPanel {
+    border: 0.2px solid black;
+    width: 100%;
+    display: block;
+  }
+  .rightPanel {
+    border: solid blue;
+    display: none;
+  }
+}

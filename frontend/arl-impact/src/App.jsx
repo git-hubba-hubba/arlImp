@@ -1,0 +1,203 @@
+import "./App.css";
+import { useState } from "react";
+import { clearStoredAuth, getStoredAuth, setStoredAuth } from "./api";
+import { createNotification, getStoredNotifications, setStoredNotifications } from "./utils/notifications";
+import Nav from "./components/Nav";
+import Modal from "./components/Modal";
+import EventModal from "./components/EventModal";
+import MemberModal from "./components/MemberModal";
+import FeedFilter from "./pages/Feed/FeedFilter";
+import MembersFilter from "./pages/Member/MemberFilter";
+import EventFilter from "./pages/Events/EventFilter";
+import FeedMain from "./pages/Feed/FeedMain";
+import MemberDashboard from "./pages/Member/MembersDashboard";
+import EventDash from "./pages/Events/EventDash";
+import FeedWidget from "./pages/Feed/FeedWidget";
+import MemberWidget from "./pages/Member/MemberWidget";
+import EventSmWid from "./components/EventSmWid";
+import HomeFilter from "./pages/Home/HomeFilter";
+import HomeWidget from './pages/Home/HomeWidget'
+import Home from "./pages/Home/Home";
+function App() {
+  // NavLogic
+  const [currentBoard, setCurrentBoard] = useState("Home");
+  const [activeModal, setActiveModal] = useState(null);
+  const [auth, setAuth] = useState(() => getStoredAuth());
+  const [notifications, setNotifications] = useState(() => getStoredNotifications());
+
+  const openModal = (modalConfig) => {
+    setActiveModal(modalConfig);
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+  };
+
+  const addNotification = (type, message) => {
+    const notification = createNotification(type, message);
+    setNotifications((currentNotifications) => {
+      const nextNotifications = [notification, ...currentNotifications].slice(0, 30);
+      setStoredNotifications(nextNotifications);
+      return nextNotifications;
+    });
+  };
+
+  const handleAuthSuccess = (nextAuth) => {
+    setStoredAuth(nextAuth);
+    setAuth(nextAuth);
+    addNotification("user", `${nextAuth.user.username} is logged in.`);
+    closeModal();
+  };
+
+  const handleUserUpdate = (user) => {
+    const nextAuth = { ...auth, user };
+    setStoredAuth(nextAuth);
+    setAuth(nextAuth);
+  };
+
+  const handleLogout = () => {
+    clearStoredAuth();
+    setAuth(null);
+    addNotification("user", "User logged out.");
+    closeModal();
+  };
+
+  const communicationChannels = [
+    {
+      name: "Discord",
+      abbreviation: "DSC",
+      image: "https://cdn.simpleicons.org/discord",
+    },
+    {
+      name: "Zoom",
+      abbreviation: "ZOM",
+      image: "https://cdn.simpleicons.org/zoom",
+    },
+    {
+      name: "Google Chat",
+      abbreviation: "GCH",
+      image: "https://cdn.simpleicons.org/googlechat",
+    },
+    {
+      name: "Telegram",
+      abbreviation: "TGM",
+      image: "https://cdn.simpleicons.org/telegram",
+    },
+    {
+      name: "WhatsApp",
+      abbreviation: "WAP",
+      image: "https://cdn.simpleicons.org/whatsapp",
+    },
+    {
+      name: "Signal",
+      abbreviation: "SIG",
+      image: "https://cdn.simpleicons.org/signal",
+    },
+    {
+      name: "Instagram DM",
+      abbreviation: "IGD",
+      image: "https://cdn.simpleicons.org/instagram",
+    },
+    {
+      name: "Facebook Workplace",
+      abbreviation: "FBW",
+      image: "https://cdn.simpleicons.org/facebook",
+    },
+  ];
+
+  return (
+    <>
+      <Nav
+        setCurrentBoard={setCurrentBoard}
+        onOpenModal={openModal}
+        currentUser={auth?.user}
+        onUserUpdate={handleUserUpdate}
+        onLogout={handleLogout}
+        notifications={notifications}
+      />
+      <Modal
+        isOpen={Boolean(activeModal)}
+        onClose={closeModal}
+        title={activeModal?.title}
+        component={activeModal?.component}
+        componentProps={activeModal?.componentProps}
+      />
+      <div className="masterJmwofford">
+        <div className="leftPanel">
+          {currentBoard === "Home" ? <><HomeFilter /></> : null}
+          {currentBoard === "Feed" ? (
+            <>
+              <FeedFilter />
+            </>
+          ) : null}
+          {currentBoard === "Member" ? (
+            <>
+              <MembersFilter />
+            </>
+          ) : null}
+          {currentBoard === "Events" ? (
+            <>
+              <EventFilter />
+            </>
+          ) : null}
+        </div>
+
+        <div className="midPanel">
+          {currentBoard === "Home" ? <><Home onAuthSuccess={handleAuthSuccess} onNotify={addNotification}/></> : null}
+          {currentBoard === "Feed" ? (
+            <>
+              <FeedMain currentUser={auth?.user} />
+            </>
+          ) : null}
+          {currentBoard === "Member" ? (
+            <>
+              <MemberDashboard
+                onOpenModal={(member) =>
+                  openModal({
+                    title: member.username || member.name,
+                    component: MemberModal,
+                    componentProps: { member },
+                  })
+                }
+              />
+            </>
+          ) : null}
+          {currentBoard === "Events" ? (
+            <>
+              <EventDash
+                onNotify={addNotification}
+                onOpenModal={(event) =>
+                  openModal({
+                    title: event.eventName,
+                    component: EventModal,
+                    componentProps: { event },
+                  })
+                }
+              />
+            </>
+          ) : null}
+        </div>
+        <div className="rightPanel">
+          {currentBoard === "Home" ? <><HomeWidget/></> : null}
+          {currentBoard === "Feed" ? (
+            <>
+              <FeedWidget />
+            </>
+          ) : null}
+          {currentBoard === "Member" ? (
+            <>
+              <MemberWidget />
+            </>
+          ) : null}
+          {currentBoard === "Events" ? (
+            <>
+              <EventSmWid />
+            </>
+          ) : null}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default App;
