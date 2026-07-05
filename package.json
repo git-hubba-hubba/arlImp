@@ -1,0 +1,7 @@
+{
+  "name": "arl-impact",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend/arl-impact ci && npm --prefix frontend/arl-impact run build"
+  }
+}
