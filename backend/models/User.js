@@ -43,6 +43,32 @@ const userSchema = new mongoose.Schema(
       default: "Bronze",
       trim: true,
     },
+    attendedEvents: [
+      {
+        event: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Event",
+        },
+        eventKey: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        eventName: {
+          type: String,
+          default: "",
+          trim: true,
+        },
+        pointsEarned: {
+          type: Number,
+          default: 0,
+        },
+        attendedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -238,14 +238,17 @@ body {
   background-color: navy;
 }
 .lilTracker {
-  /* border:solid gold; */
-  width: 33%;
+  background-color: navy;
+  border-radius: 999px;
+  transition: width 0.2s ease;
 }
 .trackbarMajor {
   border: 0.2px solid black;
-  display: flex;
+  background-color: white;
+  border-radius: 999px;
   height: 6px;
   margin: 4px;
+  overflow: hidden;
 }
 .pointCounter {
   color: lightblue;
@@ -496,12 +499,55 @@ body {
   border-radius: 50%;
   width: 20px;
 }
+.postActionButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
 .postButton:hover {
   border: 1px solid black;
   padding: 3px;
   border-radius: 50%;
   width: 20px;
   background-color: lightblue;
+}
+.commentModalPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.commentList {
+  border: 0.2px solid lightblue;
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5em;
+}
+.commentItem {
+  border-bottom: 0.2px solid lightblue;
+  padding: 0.5em 0;
+}
+.commentItem:last-child {
+  border-bottom: none;
+}
+.commentAuthor {
+  color: peru;
+  font-weight: bold;
+  margin: 0;
+}
+.commentText,
+.emptyComments {
+  margin: 0.35em 0 0;
+}
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.commentTextarea {
+  min-height: 90px;
+  resize: vertical;
 }
 .evntSplashName {
   color: lightblue;
@@ -533,6 +579,33 @@ body {
   border-radius:12px;
   margin:1em;
   cursor: pointer;
+}
+
+.attendanceForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.attendanceInput {
+  border: 0.2px solid black;
+  border-radius: 4px;
+  flex: 1 1 120px;
+  min-width: 0;
+  padding: 6px;
+}
+
+.attendanceSubmit {
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+.attendanceStatus {
+  color: black;
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  margin: 0;
 }
 .smShowImg {
   width: 100%;
@@ -761,9 +834,9 @@ body {
   margin:1em;
 }
 .userProfImg{
-  height:150px;
-  /* width:250px; */
-  border-radius:12px;
+  height:250px;
+  width:250px;
+  border-radius:50%;
 }
 .profileCan{
   /* border:solid black; */
@@ -772,20 +845,89 @@ body {
   align-items: center;
 }
 .proCanDesc{
-  /* border:solid black; */
+  /* border:solid lightblue; */
+  /* background-color:lightblue; */
+  border-radius:12px;
   width:100%;
-  margin:1em;
+  /* margin:1em; */
+  text-align: center;
 
+}
+.procanSlice{
+  font-size: 22px;
+  /* margin:1em; */
 }
 .procanTitle{
   color:lightblue;
 }
 .openProContainer{
   border:solid lightblue;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
   height:32vh;
 }.smedPro{
-  height:90px;
+  height:60px;
   margin:1em;
+}
+.profileCaddy{
+  /* border:solid grey; */
+  margin:1em;
+  padding:1em;
+  /* height:22vh; */
+}
+.procanBadge{
+  /* border:solid black; */
+  display:flex;
+  margin:1em;
+  justify-content: space-evenly;
+}
+.infoBracket{
+  /* display: flex; */
+  justify-content: space-around;
+}
+.blossom{
+  /* border:solid red; */
+  width:30%;
+  background-color: lightblue;
+}
+.bubbles{
+  /* border:solid lightblue; */
+  width:30%;
+  display: flex;
+  gap: 6px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.buttercup{
+  /* border:solid green; */
+  width:30%;
+}
+.badgeMove{
+  width:100%;
+}
+.evTix,.evFist{
+  height:30px;
+}
+.envisionContainer{
+  border: .2px solid grey;
+  background-color: lightblue;
+  /* margin:1em; */
+  text-align: right;
+  /* height:44vh; */
+  /* background-image:url('https://img.magnific.com/premium-photo/abstract-blue-background-with-smooth-shining-lines_476363-5549.jpg?semt=ais_hybrid&w=740&q=80'); */
+
+}
+.commSnap{
+  width:100%;
+}
+.envisionTxt{
+  color:black;
+  padding:2em;
+  font-family:serif;
+}.spamWord{
+  color: white;
+  font-size:28px;
 }
 /* --------------------------{GENERAL} */
 @media (max-width: 2280px) {

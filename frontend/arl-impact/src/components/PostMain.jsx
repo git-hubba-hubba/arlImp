@@ -1,6 +1,12 @@
-import React from "react";
-
-function PostMain({postObj, onEdit, onDelete}) {
+function PostMain({
+  postObj,
+  likeCount = 0,
+  commentCount = 0,
+  onComment,
+  onDelete,
+  onEdit,
+  onLike,
+}) {
   const postImage = postObj.postImage || postObj.img;
   const postTitle = postObj.postTitle || postObj.title;
 
@@ -26,20 +32,24 @@ function PostMain({postObj, onEdit, onDelete}) {
         </div>
         <div className="btnEveryPost">
           <div className="btnCol">
-            <img
-              src="https://www.freepnglogos.com/uploads/like-png/file-like-svg-wikimedia-commons-22.png"
-              alt=""
-              className="postButton"
-            />
-            <p className="colName">Like</p>
+            <button className="postActionButton" type="button" onClick={onLike}>
+              <img
+                src="https://www.freepnglogos.com/uploads/like-png/file-like-svg-wikimedia-commons-22.png"
+                alt=""
+                className="postButton"
+              />
+            </button>
+            <p className="colName">Like {likeCount}</p>
           </div>
           <div className="btnCol">
-            <img
-              src="https://www.freeiconspng.com/thumbs/comment-png/comment-png-1.png"
-              alt=""
-              className="postButton"
-            />
-            <p className="colName">Comment</p>
+            <button className="postActionButton" type="button" onClick={onComment}>
+              <img
+                src="https://www.freeiconspng.com/thumbs/comment-png/comment-png-1.png"
+                alt=""
+                className="postButton"
+              />
+            </button>
+            <p className="colName">Comment {commentCount}</p>
           </div>
           <div className="btnCol">
             <img

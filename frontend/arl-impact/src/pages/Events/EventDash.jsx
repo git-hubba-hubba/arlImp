@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { apiRequest } from '../../api'
 import EventFormModal from '../../components/EventFormModal'
 import Modal from '../../components/Modal'
 import { toDateInputValue } from '../../utils/dateFormat'
 import EventCategoryHold from './EventCategoryHold'
 
-function EventDash({ onOpenModal, onNotify }) {
+const MASTER_ATTENDANCE_CODE = "jmwofford";
+const normalizeCode = (value) => String(value || "").trim().toLowerCase();
+const isMasterAttendanceCode = (value) => normalizeCode(value) === MASTER_ATTENDANCE_CODE;
+const sampleEventKey = (contentType, eventName, index) =>
+  `${contentType}-${eventName}-${index}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const sampleAttendanceCode = (contentType, index) =>
+  `ARL-${contentType.replace(/\s+/g, "").toUpperCase()}-${index + 1}`;
+
+function EventDash({ currentUser, onOpenModal, onNotify, onUserUpdate }) {
   const [dbEvents, setDbEvents] = useState([]);
   const [eventForm, setEventForm] = useState({
     eventName: "",
@@ -13,16 +21,21 @@ function EventDash({ onOpenModal, onNotify }) {
     eventDate: "",
     eventImage: "",
     eventDescription: "",
+    attendanceCode: "",
+    attendancePoints: 100,
   });
   const [editingEventId, setEditingEventId] = useState(null);
   const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   const [status, setStatus] = useState("");
+  const [attendanceCodes, setAttendanceCodes] = useState({});
+  const [attendanceStatuses, setAttendanceStatuses] = useState({});
+  const [submittingAttendanceId, setSubmittingAttendanceId] = useState(null);
 
   const loadEvents = async () => {
     try {
       const eventsFromApi = await apiRequest("/events");
       setDbEvents(eventsFromApi);
-    } catch (error) {
+    } catch {
       setStatus("Backend events unavailable; showing sample events.");
     }
   };
@@ -45,6 +58,8 @@ function EventDash({ onOpenModal, onNotify }) {
       eventDate: "",
       eventImage: "",
       eventDescription: "",
+      attendanceCode: "",
+      attendancePoints: 100,
     });
     setEditingEventId(null);
   };
@@ -55,6 +70,7 @@ function EventDash({ onOpenModal, onNotify }) {
     const payload = {
       ...eventForm,
       eventImage: trimmedImage,
+      attendancePoints: Number(eventForm.attendancePoints) || 0,
     };
 
     try {
@@ -101,8 +117,117 @@ function EventDash({ onOpenModal, onNotify }) {
       eventDate: toDateInputValue(event.eventDate),
       eventImage: event.eventImage || event.eventImg || "",
       eventDescription: event.eventDescription || "",
+      attendanceCode: "",
+      attendancePoints: event.attendancePoints ?? 100,
     });
     setIsEventModalOpen(true);
+  };
+
+  const handleAttendanceChange = (eventId, value) => {
+    setAttendanceCodes((currentCodes) => ({
+      ...currentCodes,
+      [eventId]: value,
+    }));
+  };
+
+  const handleAttendanceSubmit = async (e, event) => {
+    e.preventDefault();
+    const attendanceKey = event._id || event.eventKey;
+
+    if (!currentUser?._id) {
+      setAttendanceStatuses((currentStatuses) => ({
+        ...currentStatuses,
+        [attendanceKey]: "Sign in before adding attendance.",
+      }));
+      return;
+    }
+
+    const attendanceCode = attendanceCodes[attendanceKey]?.trim();
+
+    if (!attendanceCode) {
+      setAttendanceStatuses((currentStatuses) => ({
+        ...currentStatuses,
+        [attendanceKey]: "Enter this event's AttendanceCode.",
+      }));
+      return;
+    }
+
+    setSubmittingAttendanceId(attendanceKey);
+    setAttendanceStatuses((currentStatuses) => ({
+      ...currentStatuses,
+      [attendanceKey]: "",
+    }));
+
+    try {
+      let message;
+      let updatedUser;
+
+      if (event._id) {
+        const result = await apiRequest(`/events/${event._id}/attendance`, {
+          method: "POST",
+          body: JSON.stringify({ attendanceCode }),
+        });
+
+        message = result.message;
+        updatedUser = result.user;
+      } else {
+        const alreadyAttended = (currentUser.attendedEvents || []).some(
+          (attendance) => attendance.eventKey === event.eventKey
+        );
+
+        if (alreadyAttended) {
+          throw new Error("Attendance already recorded for this event.");
+        }
+
+        if (
+          !isMasterAttendanceCode(attendanceCode) &&
+          normalizeCode(event.attendanceCode) !== normalizeCode(attendanceCode)
+        ) {
+          throw new Error("Attendance code does not match this event.");
+        }
+
+        const pointsEarned = event.attendancePoints || 100;
+        const nextUser = {
+          ...currentUser,
+          userPoints: (Number(currentUser.userPoints) || 0) + pointsEarned,
+          attendedEvents: [
+            ...(currentUser.attendedEvents || []),
+            {
+              eventKey: event.eventKey,
+              eventName: event.eventName,
+              pointsEarned,
+              attendedAt: new Date().toISOString(),
+            },
+          ],
+        };
+
+        const result = await apiRequest(`/users/${currentUser._id}`, {
+          method: "PUT",
+          body: JSON.stringify(nextUser),
+        });
+
+        message = `Attendance recorded. ${pointsEarned} points earned.`;
+        updatedUser = result.user;
+      }
+
+      onUserUpdate?.(updatedUser);
+      onNotify?.("event", message);
+      setAttendanceCodes((currentCodes) => ({
+        ...currentCodes,
+        [attendanceKey]: "",
+      }));
+      setAttendanceStatuses((currentStatuses) => ({
+        ...currentStatuses,
+        [attendanceKey]: message,
+      }));
+    } catch (error) {
+      setAttendanceStatuses((currentStatuses) => ({
+        ...currentStatuses,
+        [attendanceKey]: error.message,
+      }));
+    } finally {
+      setSubmittingAttendanceId(null);
+    }
   };
 
   const handleDeleteEvent = async (eventId) => {
@@ -242,6 +367,21 @@ function EventDash({ onOpenModal, onNotify }) {
         "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=800&q=80",
     }]
   ];
+  const eventSections = [
+    { contentType: "For You", arrObjs: events[0] },
+    { contentType: "Trending", arrObjs: events[1] },
+    { contentType: "Today", arrObjs: events[2] },
+    { contentType: "Free Events", arrObjs: events[3] },
+  ].map((section) => ({
+    ...section,
+    arrObjs: section.arrObjs.map((event, index) => ({
+      ...event,
+      eventKey: sampleEventKey(section.contentType, event.eventName, index),
+      attendanceCode: sampleAttendanceCode(section.contentType, index),
+      attendancePoints: event.attendancePoints || 100,
+    })),
+  }));
+
   return (
     <div>
       <img src="https://reformjudaism.org/sites/default/files/2021-01/camp-quiz-animation.gif" alt="" className="eventSplashImg" />
@@ -282,7 +422,16 @@ function EventDash({ onOpenModal, onNotify }) {
       </div>
       {dbEvents.length > 0 && (
         <>
-          <EventCategoryHold contentType={"Database Events"} arrObjs={dbEvents} onOpenModal={onOpenModal}/>
+          <EventCategoryHold
+            attendanceCodes={attendanceCodes}
+            attendanceStatuses={attendanceStatuses}
+            contentType={"Database Events"}
+            arrObjs={dbEvents}
+            onAttendanceChange={handleAttendanceChange}
+            onAttendanceSubmit={handleAttendanceSubmit}
+            onOpenModal={onOpenModal}
+            submittingAttendanceId={submittingAttendanceId}
+          />
           <div className="crudList">
             {dbEvents.map((event) => (
               <div className="crudListItem" key={event._id}>
@@ -294,10 +443,19 @@ function EventDash({ onOpenModal, onNotify }) {
           </div>
         </>
       )}
-      <EventCategoryHold contentType={"For You"} arrObjs={events[0]} onOpenModal={onOpenModal}/>
-      <EventCategoryHold contentType={"Trending"} arrObjs={events[1]} onOpenModal={onOpenModal}/>
-      <EventCategoryHold contentType={"Today"} arrObjs={events[2]} onOpenModal={onOpenModal}/>
-      <EventCategoryHold contentType={"Free Events"} arrObjs={events[3]} onOpenModal={onOpenModal}/>
+      {eventSections.map((section) => (
+        <EventCategoryHold
+          attendanceCodes={attendanceCodes}
+          attendanceStatuses={attendanceStatuses}
+          key={section.contentType}
+          contentType={section.contentType}
+          arrObjs={section.arrObjs}
+          onAttendanceChange={handleAttendanceChange}
+          onAttendanceSubmit={handleAttendanceSubmit}
+          onOpenModal={onOpenModal}
+          submittingAttendanceId={submittingAttendanceId}
+        />
+      ))}
 
     </div>
   )

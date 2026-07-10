@@ -165,7 +165,9 @@ function App() {
           {currentBoard === "Events" ? (
             <>
               <EventDash
+                currentUser={auth?.user}
                 onNotify={addNotification}
+                onUserUpdate={handleUserUpdate}
                 onOpenModal={(event) =>
                   openModal({
                     title: event.eventName,
