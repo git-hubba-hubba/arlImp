@@ -38,6 +38,7 @@ function getBusinessIcon(business) {
 
 function LocationLeaf({ businesses = [], onUserLocationChange }) {
   const [locationError, setLocationError] = useState("");
+  const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
 
   const arlingtonDistanceMiles = useMemo(() => {
@@ -56,6 +57,15 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
       }))
       .sort((leftBusiness, rightBusiness) => leftBusiness.distanceMiles - rightBusiness.distanceMiles);
   }, [businesses, userLocation]);
+
+  const selectedBusinessWithDistance = useMemo(() => {
+    if (!selectedBusiness || !userLocation) return selectedBusiness;
+
+    return {
+      ...selectedBusiness,
+      distanceMiles: calculateDistanceMiles(userLocation, selectedBusiness),
+    };
+  }, [selectedBusiness, userLocation]);
 
   const handleUseCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -84,6 +94,17 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
     );
   };
 
+  const handleMarkerClick = (business) => {
+    setSelectedBusiness(business);
+
+    if (!userLocation) {
+      setLocationError("Use My Location first to calculate distance to this business.");
+      return;
+    }
+
+    setLocationError("");
+  };
+
   return (
     <section className="locationLeaf">
       <div className="locationLeafHeader">
@@ -103,6 +124,19 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
           <p>
             You are about {formatDistance(arlingtonDistanceMiles)} from the center of Arlington, Texas.
           </p>
+          {selectedBusinessWithDistance && (
+            <p>
+              {typeof selectedBusinessWithDistance.distanceMiles === "number"
+                ? `${selectedBusinessWithDistance.name} is ${formatDistance(selectedBusinessWithDistance.distanceMiles)} from you.`
+                : `Select Use My Location to estimate distance to ${selectedBusinessWithDistance.name}.`}
+            </p>
+          )}
+        </div>
+      )}
+      {!arlingtonDistanceMiles && selectedBusinessWithDistance && (
+        <div className="locationLeafDistancePanel">
+          <p className="modalEyebrow">Selected Business</p>
+          <p>Select Use My Location to estimate distance to {selectedBusinessWithDistance.name}.</p>
         </div>
       )}
 
@@ -134,6 +168,9 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
           )}
           {businessesWithDistance.map((business) => (
             <Marker
+              eventHandlers={{
+                click: () => handleMarkerClick(business),
+              }}
               icon={getBusinessIcon(business)}
               key={business.id || business.name}
               position={[business.lat, business.lng]}
