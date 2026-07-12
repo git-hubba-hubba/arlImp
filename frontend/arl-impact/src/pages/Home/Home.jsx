@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import JoinComp from "../../components/JoinComp";
 import AdSliver from "../../components/AdSliver";
 import BusinessQuad from "../../components/BusinessQuad";
@@ -6,7 +6,6 @@ import BusinessQuad from "../../components/BusinessQuad";
 import Modal from "../../components/Modal";
 import LoginForm from "../../components/LoginForm";
 import SignUpForm from "../../components/SignUpForm";
-import NameSpace from "../../components/NameSpace";
 
 function Home({ onAuthSuccess, onNotify }) {
   const [activeModal, setActiveModal] = useState(null);
@@ -65,8 +64,8 @@ function Home({ onAuthSuccess, onNotify }) {
       <AdSliver adObj={adArr[1]} />
       <AdSliver adObj={adArr[2]} />
 
-      <img src="https://arlington.impactingcitiestx.com/wp-content/uploads/2025/09/IMPACT-OFFICIAL-Logo-2048x773.png" alt="" className="logoBearer" />
       <BusinessQuad />
+      <img src="https://arlington.impactingcitiestx.com/wp-content/uploads/2025/09/IMPACT-OFFICIAL-Logo-2048x773.png" alt="" className="logoBearer" />
 
 
       <div className="envisionContainer">

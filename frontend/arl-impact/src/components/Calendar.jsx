@@ -2,12 +2,37 @@ import { useState } from "react";
 import CalendarDayModal from "./CalendarDayModal";
 import Modal from "./Modal";
 
-const Calendar = () => {
+const calendarStorageKey = (userId) => `arlImpactCalendarEvents:${userId}`;
+
+const formatCalendarDateKey = (year, month, day) =>
+  `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+const getStoredCalendarEvents = (userId) => {
+  if (!userId) return {};
+
+  try {
+    const rawEvents = localStorage.getItem(calendarStorageKey(userId));
+    return rawEvents ? JSON.parse(rawEvents) : {};
+  } catch {
+    return {};
+  }
+};
+
+const setStoredCalendarEvents = (userId, events) => {
+  if (!userId) return;
+  localStorage.setItem(calendarStorageKey(userId), JSON.stringify(events));
+};
+
+const Calendar = ({ currentUser }) => {
   const today = new Date();
+  const currentUserId = currentUser?._id || currentUser?.id;
 
   const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
   const [selectedYear] = useState(today.getFullYear());
   const [selectedDay, setSelectedDay] = useState(null);
+  const [savedEvents, setSavedEvents] = useState(() =>
+    getStoredCalendarEvents(currentUserId)
+  );
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -37,6 +62,29 @@ const Calendar = () => {
     selectedDay !== null
       ? `${months[selectedMonth]} ${selectedDay}, ${selectedYear}`
       : "";
+  const selectedDateKey =
+    selectedDay !== null
+      ? formatCalendarDateKey(selectedYear, selectedMonth, selectedDay)
+      : "";
+
+  const handleSaveEvent = (dateKey, eventText) => {
+    if (!currentUserId) return;
+
+    setSavedEvents((currentEvents) => {
+      const nextEvents = {
+        ...currentEvents,
+        [dateKey]: eventText,
+      };
+
+      if (!eventText.trim()) {
+        delete nextEvents[dateKey];
+      }
+
+      setStoredCalendarEvents(currentUserId, nextEvents);
+      return nextEvents;
+    });
+    closeModal();
+  };
 
   return (
     <div className="calendar-wrapper">
@@ -66,14 +114,28 @@ const Calendar = () => {
 
       <div className="calendar-grid">
         {calendarDays.map((day, index) => (
-          <button
-            key={index}
-            className={`calendar-day ${!day ? "empty-day" : ""}`}
-            onClick={() => openModal(day)}
-            disabled={!day}
-          >
-            {day}
-          </button>
+          (() => {
+            const dateKey = day
+              ? formatCalendarDateKey(selectedYear, selectedMonth, day)
+              : "";
+            const hasSavedEvent = Boolean(savedEvents[dateKey]?.trim());
+
+            return (
+              <button
+                key={index}
+                className={`calendar-day ${!day ? "empty-day" : ""} ${hasSavedEvent ? "has-calendar-event" : ""}`}
+                onClick={() => openModal(day)}
+                disabled={!day}
+              >
+                <span>{day}</span>
+                {hasSavedEvent && (
+                  <span aria-label="Saved calendar event" className="calendar-event-icon">
+                    •
+                  </span>
+                )}
+              </button>
+            );
+          })()
         ))}
       </div>
 
@@ -82,7 +144,13 @@ const Calendar = () => {
         onClose={closeModal}
         title={selectedDate}
         component={CalendarDayModal}
-        componentProps={{ selectedDate }}
+        componentProps={{
+          currentUser,
+          eventText: savedEvents[selectedDateKey] || "",
+          onSaveEvent: handleSaveEvent,
+          selectedDate,
+          selectedDateKey,
+        }}
       />
     </div>
   );

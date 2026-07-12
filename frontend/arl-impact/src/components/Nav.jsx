@@ -1,4 +1,3 @@
-import React from "react";
 import Calendar from "./Calendar";
 import NotificationModal from "./NotificationModal";
 import ProfileModal from "./ProfileModal";
@@ -33,6 +32,7 @@ function Nav({setCurrentBoard, onOpenModal, currentUser, onUserUpdate, onLogout,
                 onOpenModal({
                   title: "Event Calendar",
                   component: Calendar,
+                  componentProps: { currentUser },
                 })
               }
             />

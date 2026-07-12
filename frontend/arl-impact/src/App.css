@@ -42,12 +42,17 @@
 }
 
 .calendar-day {
+  align-items: center;
   height: 65px;
   border: 1px solid #333;
   background: #1c1c1c;
   color: white;
   font-size: .8rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
   transition: 0.2s ease;
 }
 
@@ -64,6 +69,21 @@
 .empty-day:hover {
   transform: none;
   background: #090909;
+}
+.has-calendar-event {
+  border-color: lightblue;
+}
+.calendar-event-icon {
+  align-items: center;
+  background: lightblue;
+  border-radius: 50%;
+  color: black;
+  display: flex;
+  font-size: 16px;
+  height: 14px;
+  justify-content: center;
+  line-height: 1;
+  width: 14px;
 }
 
 .event-textarea {
@@ -928,6 +948,80 @@ body {
 }.spamWord{
   color: white;
   font-size:28px;
+}
+.locationLeaf {
+  border: 0.2px solid lightblue;
+  margin: 1em;
+  padding: 1em;
+}
+.locationLeafHeader {
+  align-items: center;
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+}
+.locationLeafTitle {
+  color: lightblue;
+  margin: 0.2em 0;
+}
+.locationLeafButton {
+  width: auto;
+}
+.locationLeafDistancePanel {
+  border: 0.2px solid lightblue;
+  margin: 1em 0;
+  padding: 0.75em;
+}
+.locationLeafDistancePanel p {
+  margin: 0.25em 0;
+}
+.locationLeafMapShell {
+  border: 0.2px solid lightblue;
+  height: 420px;
+  margin: 1em 0;
+}
+.locationLeafMap {
+  height: 100%;
+  width: 100%;
+}
+.locationLeafBusinessMarker span,
+.locationLeafUserMarker span {
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+  display: block;
+  height: 18px;
+  width: 18px;
+}
+.locationLeafBusinessMarker span {
+  background: peru;
+}
+.locationLeafUserMarker span {
+  background: lightblue;
+}
+.locationLeafBusinessList {
+  display: grid;
+  gap: 0.75em;
+}
+.locationLeafBusiness {
+  align-items: center;
+  border: 0.2px solid lightblue;
+  display: flex;
+  gap: 0.75em;
+  padding: 0.75em;
+}
+.locationLeafBusiness h3,
+.locationLeafBusiness p {
+  margin: 0.2em 0;
+}
+.locationLeafBusinessIcon {
+  height: 36px;
+  object-fit: contain;
+  width: 36px;
+}
+.locationLeafEmpty {
+  color: peru;
+  margin: 0;
 }
 /* --------------------------{GENERAL} */
 @media (max-width: 2280px) {
