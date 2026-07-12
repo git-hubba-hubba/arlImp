@@ -15,6 +15,7 @@ import EventDash from "./pages/Events/EventDash";
 import FeedWidget from "./pages/Feed/FeedWidget";
 import MemberWidget from "./pages/Member/MemberWidget";
 import EventSmWid from "./components/EventSmWid";
+import { featuredBusinesses } from "./data/featuredBusinesses";
 import HomeFilter from "./pages/Home/HomeFilter";
 import HomeWidget from './pages/Home/HomeWidget'
 import Home from "./pages/Home/Home";
@@ -24,6 +25,7 @@ function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [auth, setAuth] = useState(() => getStoredAuth());
   const [notifications, setNotifications] = useState(() => getStoredNotifications());
+  const [userLocation, setUserLocation] = useState(null);
 
   const openModal = (modalConfig) => {
     setActiveModal(modalConfig);
@@ -61,49 +63,6 @@ function App() {
     addNotification("user", "User logged out.");
     closeModal();
   };
-
-  const communicationChannels = [
-    {
-      name: "Discord",
-      abbreviation: "DSC",
-      image: "https://cdn.simpleicons.org/discord",
-    },
-    {
-      name: "Zoom",
-      abbreviation: "ZOM",
-      image: "https://cdn.simpleicons.org/zoom",
-    },
-    {
-      name: "Google Chat",
-      abbreviation: "GCH",
-      image: "https://cdn.simpleicons.org/googlechat",
-    },
-    {
-      name: "Telegram",
-      abbreviation: "TGM",
-      image: "https://cdn.simpleicons.org/telegram",
-    },
-    {
-      name: "WhatsApp",
-      abbreviation: "WAP",
-      image: "https://cdn.simpleicons.org/whatsapp",
-    },
-    {
-      name: "Signal",
-      abbreviation: "SIG",
-      image: "https://cdn.simpleicons.org/signal",
-    },
-    {
-      name: "Instagram DM",
-      abbreviation: "IGD",
-      image: "https://cdn.simpleicons.org/instagram",
-    },
-    {
-      name: "Facebook Workplace",
-      abbreviation: "FBW",
-      image: "https://cdn.simpleicons.org/facebook",
-    },
-  ];
 
   return (
     <>
@@ -167,6 +126,7 @@ function App() {
               <EventDash
                 currentUser={auth?.user}
                 onNotify={addNotification}
+                onUserLocationChange={setUserLocation}
                 onUserUpdate={handleUserUpdate}
                 onOpenModal={(event) =>
                   openModal({
@@ -180,7 +140,13 @@ function App() {
           ) : null}
         </div>
         <div className="rightPanel">
-          {currentBoard === "Home" ? <><HomeWidget/></> : null}
+          {currentBoard === "Home" ? (
+            <HomeWidget
+              businesses={featuredBusinesses}
+              currentUser={auth?.user}
+              userLocation={userLocation}
+            />
+          ) : null}
           {currentBoard === "Feed" ? (
             <>
               <FeedWidget />

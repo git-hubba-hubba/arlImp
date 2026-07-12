@@ -30,7 +30,10 @@ async function getEvent(req, res, next) {
 
 async function createEvent(req, res, next) {
   try {
-    const event = await Event.create(req.body);
+    const event = await Event.create({
+      ...req.body,
+      createdBy: req.user._id,
+    });
     return res.status(201).json(event);
   } catch (error) {
     return next(error);

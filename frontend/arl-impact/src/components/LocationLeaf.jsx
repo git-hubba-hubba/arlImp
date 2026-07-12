@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { calculateDistanceMiles, formatDistance } from "../utils/locationDistance";
 
 const ARLINGTON_CENTER = [32.705, -97.1228];
 const ARLINGTON_RADIUS_METERS = 10000;
@@ -35,33 +36,7 @@ function getBusinessIcon(business) {
   });
 }
 
-function toRadians(value) {
-  return (value * Math.PI) / 180;
-}
-
-function calculateDistanceMiles(start, destination) {
-  const earthRadiusMiles = 3958.8;
-  const latDifference = toRadians(destination.lat - start.lat);
-  const lngDifference = toRadians(destination.lng - start.lng);
-  const startLat = toRadians(start.lat);
-  const destinationLat = toRadians(destination.lat);
-
-  const haversine =
-    Math.sin(latDifference / 2) ** 2 +
-    Math.cos(startLat) *
-      Math.cos(destinationLat) *
-      Math.sin(lngDifference / 2) ** 2;
-
-  return earthRadiusMiles * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
-}
-
-function formatDistance(distanceMiles) {
-  if (distanceMiles < 0.1) return "Less than 0.1 miles";
-
-  return `${distanceMiles.toFixed(1)} miles`;
-}
-
-function LocationLeaf({ businesses = [] }) {
+function LocationLeaf({ businesses = [], onUserLocationChange }) {
   const [locationError, setLocationError] = useState("");
   const [userLocation, setUserLocation] = useState(null);
 
@@ -91,10 +66,13 @@ function LocationLeaf({ businesses = [] }) {
     setLocationError("");
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setUserLocation({
+        const nextUserLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        });
+        };
+
+        setUserLocation(nextUserLocation);
+        onUserLocationChange?.(nextUserLocation);
       },
       () => {
         setLocationError("Location permission was denied or unavailable.");

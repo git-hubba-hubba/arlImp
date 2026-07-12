@@ -3,6 +3,7 @@ import { apiRequest } from '../../api'
 import EventFormModal from '../../components/EventFormModal'
 import LocationLeaf from '../../components/LocationLeaf'
 import Modal from '../../components/Modal'
+import { featuredBusinesses } from '../../data/featuredBusinesses'
 import { toDateInputValue } from '../../utils/dateFormat'
 import EventCategoryHold from './EventCategoryHold'
 
@@ -14,19 +15,7 @@ const sampleEventKey = (contentType, eventName, index) =>
 const sampleAttendanceCode = (contentType, index) =>
   `ARL-${contentType.replace(/\s+/g, "").toUpperCase()}-${index + 1}`;
 
-const featuredBusinesses = [
-  // {
-  //   id: "business-1",
-  //   name: "Business Name",
-  //   lat: 32.705,
-  //   lng: -97.1228,
-  //   iconUrl: "/icons/business.png",
-  //   category: "Category",
-  //   address: "Optional address",
-  // },
-];
-
-function EventDash({ currentUser, onOpenModal, onNotify, onUserUpdate }) {
+function EventDash({ currentUser, onOpenModal, onNotify, onUserLocationChange, onUserUpdate }) {
   const [dbEvents, setDbEvents] = useState([]);
   const [eventForm, setEventForm] = useState({
     eventName: "",
@@ -399,7 +388,10 @@ function EventDash({ currentUser, onOpenModal, onNotify, onUserUpdate }) {
     <div>
       <img src="https://reformjudaism.org/sites/default/files/2021-01/camp-quiz-animation.gif" alt="" className="eventSplashImg" />
       <h1 className="evntSplashName fontdiner-swanky-regular"> Community & Local Events</h1>
-      <LocationLeaf businesses={featuredBusinesses} />
+      <LocationLeaf
+        businesses={featuredBusinesses}
+        onUserLocationChange={onUserLocationChange}
+      />
       <Modal
         isOpen={isEventModalOpen}
         onClose={() => {

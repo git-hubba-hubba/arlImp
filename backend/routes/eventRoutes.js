@@ -11,7 +11,7 @@ const requireAuth = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.route("/").get(getEvents).post(createEvent);
+router.route("/").get(getEvents).post(requireAuth, createEvent);
 router.post("/:id/attendance", requireAuth, attendEvent);
 router.route("/:id").get(getEvent).put(updateEvent).delete(deleteEvent);
 

@@ -26,6 +26,10 @@ const eventSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     attendanceCode: {
       type: String,
       default: "",

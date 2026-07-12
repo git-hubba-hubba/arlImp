@@ -281,6 +281,33 @@ body {
   /* color:black; */
   padding: 1em;
 }
+.homeWidgetPanel {
+  display: grid;
+  gap: 1em;
+}
+.homeWidgetSection {
+  border: 0.2px solid lightblue;
+  margin: 1em;
+  padding: 0.75em;
+}
+.homeWidgetSection h3 {
+  color: lightblue;
+  margin: 0 0 0.5em;
+}
+.homeWidgetItem {
+  border-top: 0.2px solid lightblue;
+  padding: 0.5em 0;
+}
+.homeWidgetItem p,
+.homeWidgetItem span {
+  display: block;
+  margin: 0.2em 0;
+}
+.homeWidgetItem span,
+.homeWidgetEmpty {
+  color: peru;
+  font-size: 0.85rem;
+}
 .topEvt {
   font-weight: bold;
 }
@@ -914,7 +941,7 @@ body {
 .bubbles{
   /* border:solid lightblue; */
   width:30%;
-  display: flex;
+  /* display: flex; */
   gap: 6px;
   justify-content: space-evenly;
   flex-wrap: wrap;

@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import { apiRequest } from "../api";
 import UserWidget from "./UserWidget";
+import HomeWidget from "../pages/Home/HomeWidget";
 
 const defaultUser = {
   username: "Guest User",
@@ -71,7 +72,7 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
     <div className="modalDetail">
       <div className="profileCan">
         <div>
-        <h1 className="procanTitle fontdiner-swanky-regular">
+          <h1 className="procanTitle fontdiner-swanky-regular">
             {formData.username}
           </h1>
           <img
@@ -79,36 +80,37 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
             alt={formData.username}
             className="userProfImg"
           />
-          
         </div>
         <div className="proCanDesc">
-          
-          <h3 className="procanMotto fontdiner-swanky-regular">{formData.userOccupation}</h3>
+          <h3 className="procanMotto fontdiner-swanky-regular">
+            {formData.userOccupation}
+          </h3>
           <div className="profileCaddy">
             <div className="infoBracket">
               <p className="procanSlice fontdiner-swanky-regular">
                 {formData.userEmail}
               </p>
+
               <UserWidget points={formData.userPoints} />
-              
+
               <div className="procanBadge">
-          <button
-            className="signUp profileAction"
-            type="button"
-            onClick={() => setIsEditing(!isEditing)}
-          >
-            {isEditing ? "Cancel Edit" : "Edit Profile"}
-          </button>
-          {loggedUserInfo && (
-            <button
-              className="signUp profileAction"
-              type="button"
-              onClick={onLogout}
-            >
-              Log Out
-            </button>
-          )}
-        </div>
+                <button
+                  className="signUp profileAction"
+                  type="button"
+                  onClick={() => setIsEditing(!isEditing)}
+                >
+                  {isEditing ? "Cancel Edit" : "Edit Profile"}
+                </button>
+                {loggedUserInfo && (
+                  <button
+                    className="signUp profileAction"
+                    type="button"
+                    onClick={onLogout}
+                  >
+                    Log Out
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -169,46 +171,46 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
         </form>
       )}
       <div className="procanImage">
-          {status && <p className="formStatus">{status}</p>}
-        </div>
-      
-      <div className="openProContainer">
-       <div className="blossom">
-       
-        <img src="https://cdna.artstation.com/p/assets/images/images/074/370/650/original/anders-gjendem-superearthspin2.gif?1711920491" alt="" className="badgeMove" />
-        <p className="procanSlice fontdiner-swanky-regular">
-                {formData.userBadgeTier}
-              </p>
-       </div>
-       <div className="bubbles">Events Attended:
-        <hr />
-        {attendedEvents.length > 0 ? (
-          attendedEvents.map((attendance, index) => (
-            <img
-              key={attendance._id || attendance.eventKey || `${attendance.event}-${index}`}
-              src={EVENT_TICKET_IMAGE}
-              alt={attendance.eventName || "Attended event"}
-              className="evTix"
-              title={attendance.eventName}
-            />
-          ))
-        ) : (
-          <p className="emptyAttendance">No events attended yet.</p>
-        )}
-        </div>
-       <div className="buttercup">Member Engagement:
-        <hr />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-        <img src="https://www.freeiconspng.com/thumbs/fist-png/fist-png-10.png" alt="" className="evFist" />
-         </div>
-
-        
+        {status && <p className="formStatus">{status}</p>}
       </div>
+      <HomeWidget currentUser={loggedUserInfo} />
+      <div className="openProContainer">
+        <div className="blossom">
+          <img
+            src="https://cdna.artstation.com/p/assets/images/images/074/370/650/original/anders-gjendem-superearthspin2.gif?1711920491"
+            alt=""
+            className="badgeMove"
+          />
+          <p className="procanSlice fontdiner-swanky-regular">
+            {formData.userBadgeTier}
+          </p>
+        </div>
+        <div className="bubbles">
+          Events Attended:
+          <hr />
+          {attendedEvents.length > 0 ? (
+            attendedEvents.map((attendance, index) => (
+              <img
+                key={
+                  attendance._id ||
+                  attendance.eventKey ||
+                  `${attendance.event}-${index}`
+                }
+                src={EVENT_TICKET_IMAGE}
+                alt={attendance.eventName || "Attended event"}
+                className="evTix"
+                title={attendance.eventName}
+              />
+            ))
+          ) : (
+            <p className="emptyAttendance">No events attended yet.</p>
+          )}
+        </div>
+        {/* <div className="buttercup">
+          
+        </div> */}
+      </div>
+      
     </div>
   );
 }
