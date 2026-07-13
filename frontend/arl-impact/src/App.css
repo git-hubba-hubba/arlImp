@@ -1050,6 +1050,45 @@ body {
   color: peru;
   margin: 0;
 }
+.theaterContainer{
+  /* border:solid grey; */
+  margin:1em;
+  background-color: lightblue;
+  padding:1em;
+  display:block;
+}
+.screen{
+  /* border: .2px solid black; */
+  background-color: white;
+  border-radius:12px;
+  /* height:44vh; */
+
+}
+.screenMarquee{
+  color:black;
+}
+.theaterBtn{
+  /* border:solid black; */
+  display:flex;
+  justify-content: space-evenly;
+}
+.thBtn{
+  padding:12px;
+  color:black;
+}
+.thBtn:hover{
+  padding:12px;
+  color:white;
+}
+.lefteye{
+  /* border:solid grey; */
+}
+.tboz{
+  /* border:solid black; */
+}
+.screenPoster{
+  width:100%;
+}
 /* --------------------------{GENERAL} */
 @media (max-width: 2280px) {
   body {
@@ -1111,4 +1150,5 @@ body {
     border: solid blue;
     display: none;
   }
+ 
 }
