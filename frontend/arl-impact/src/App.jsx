@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { clearStoredAuth, getStoredAuth, setStoredAuth } from "./api";
+import { takeDirectMessagesForUser } from "./utils/directMessages";
 import { createNotification, getStoredNotifications, setStoredNotifications } from "./utils/notifications";
 import Nav from "./components/Nav";
 import Modal from "./components/Modal";
@@ -48,6 +49,12 @@ function App() {
     setStoredAuth(nextAuth);
     setAuth(nextAuth);
     addNotification("user", `${nextAuth.user.username} is logged in.`);
+    takeDirectMessagesForUser(nextAuth.user).forEach((directMessage) => {
+      addNotification(
+        "direct message",
+        `${directMessage.senderName}: ${directMessage.message}`
+      );
+    });
     closeModal();
   };
 
@@ -115,7 +122,11 @@ function App() {
                   openModal({
                     title: member.username || member.name,
                     component: MemberModal,
-                    componentProps: { member },
+                    componentProps: {
+                      currentUser: auth?.user,
+                      member,
+                      onNotify: addNotification,
+                    },
                   })
                 }
               />

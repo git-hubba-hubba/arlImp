@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { apiRequest } from "../api";
-import UserWidget from "./UserWidget";
 import HomeWidget from "../pages/Home/HomeWidget";
 
 const defaultUser = {
@@ -16,6 +15,19 @@ const defaultUser = {
 const EVENT_TICKET_IMAGE =
   "https://png.pngtree.com/png-vector/20250816/ourlarge/pngtree-vintage-ticket-template-with-title-and-text-space-on-white-background-png-image_17169675.webp";
 
+function getTierClass(tier) {
+  return String(tier || "guest").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
+function getProfileProgress(points) {
+  if (points >= 1000) return 100;
+  if (points >= 500) return 76;
+  if (points >= 250) return 52;
+  if (points > 0) return 28;
+
+  return 10;
+}
+
 function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
   const user = loggedUserInfo || defaultUser;
   const [formData, setFormData] = useState({
@@ -30,6 +42,8 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
   const [status, setStatus] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const attendedEvents = user.attendedEvents || [];
+  const tierClass = getTierClass(formData.userBadgeTier);
+  const profileProgress = getProfileProgress(Number(formData.userPoints) || 0);
 
   const handleChange = (e) => {
     const value =
@@ -69,148 +83,104 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
   };
 
   return (
-    <div className="modalDetail">
-      <div className="profileCan">
-        <div>
-          <h1 className="procanTitle fontdiner-swanky-regular">
-            {formData.username}
-          </h1>
-          <img
-            src={formData.userImage || defaultUser.userImage}
-            alt={formData.username}
-            className="userProfImg"
-          />
-        </div>
-        <div className="proCanDesc">
-          <h3 className="procanMotto fontdiner-swanky-regular">
-            {formData.userOccupation}
-          </h3>
-          <div className="profileCaddy">
-            <div className="infoBracket">
-              <p className="procanSlice fontdiner-swanky-regular">
-                {formData.userEmail}
-              </p>
-
-              <UserWidget points={formData.userPoints} />
-
-              <div className="procanBadge">
-                <button
-                  className="signUp profileAction"
-                  type="button"
-                  onClick={() => setIsEditing(!isEditing)}
-                >
-                  {isEditing ? "Cancel Edit" : "Edit Profile"}
-                </button>
-                {loggedUserInfo && (
-                  <button
-                    className="signUp profileAction"
-                    type="button"
-                    onClick={onLogout}
-                  >
-                    Log Out
-                  </button>
-                )}
-              </div>
-            </div>
+    <div className={`profileModalTemplate profileTier-${tierClass}`}>
+      <section className="profileModalHero">
+        <img
+          src={formData.userImage || defaultUser.userImage}
+          alt={formData.username}
+          className="profileModalImage"
+        />
+        <div className="profileModalIntro">
+          <p className="profileModalEyebrow">{formData.userBadgeTier}</p>
+          <h2 className="profileModalName fontdiner-swanky-regular">
+            {formData.username || "Community Member"}
+          </h2>
+          <p>{formData.userOccupation || "Community Member"}</p>
+          <p>{formData.userEmail}</p>
+          <div className="profileModalActions">
+            <button
+              className="signUp profileAction"
+              type="button"
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              {isEditing ? "Cancel Edit" : "Edit Profile"}
+            </button>
+            {loggedUserInfo && (
+              <button className="signUp profileAction" type="button" onClick={onLogout}>
+                Log Out
+              </button>
+            )}
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className="profileModalStats">
+        <div>
+          <span>Points</span>
+          <strong>{formData.userPoints}</strong>
+        </div>
+        <div>
+          <span>Events</span>
+          <strong>{attendedEvents.length}</strong>
+        </div>
+        <div>
+          <span>Badge</span>
+          <strong>{formData.userBadgeTier}</strong>
+        </div>
+      </section>
+
+      <section className="profileBadgeJourney">
+        <div className="profileBadgeHeader">
+          <span className="profileBadgeOrb fontdiner-swanky-regular">
+            {String(formData.userBadgeTier || "B").charAt(0)}
+          </span>
+          <div>
+            <p className="profileModalEyebrow">Impact Journey</p>
+            <h3>{profileProgress}% toward the next milestone</h3>
+          </div>
+        </div>
+        <div className="profileProgressTrack">
+          <div className="profileProgressFill" style={{ width: `${profileProgress}%` }} />
+        </div>
+      </section>
+
       {isEditing && (
-        <form className="profileEditForm" onSubmit={handleSubmit}>
-          <input
-            className="frmSU"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Username"
-          />
-          <input
-            className="frmSU"
-            name="userEmail"
-            value={formData.userEmail}
-            onChange={handleChange}
-            placeholder="Email"
-            type="email"
-          />
-          <input
-            className="frmSU"
-            name="userImage"
-            value={formData.userImage}
-            onChange={handleChange}
-            placeholder="Profile Image URL"
-          />
-          <input
-            className="frmSU"
-            name="userOccupation"
-            value={formData.userOccupation}
-            onChange={handleChange}
-            placeholder="Occupation"
-          />
-          <input
-            className="frmSU"
-            name="userPoints"
-            value={formData.userPoints}
-            onChange={handleChange}
-            placeholder="Points"
-            type="number"
-          />
-          <input
-            className="frmSU"
-            name="userBadgeTier"
-            value={formData.userBadgeTier}
-            onChange={handleChange}
-            placeholder="Badge Tier"
-          />
-          <button
-            className="signUp formSubmit"
-            type="submit"
-            disabled={isSaving}
-          >
+        <form className="profileEditForm profileEditPanel" onSubmit={handleSubmit}>
+          <input className="frmSU" name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
+          <input className="frmSU" name="userEmail" value={formData.userEmail} onChange={handleChange} placeholder="Email" type="email" />
+          <input className="frmSU" name="userImage" value={formData.userImage} onChange={handleChange} placeholder="Profile Image URL" />
+          <input className="frmSU" name="userOccupation" value={formData.userOccupation} onChange={handleChange} placeholder="Occupation" />
+          <input className="frmSU" name="userPoints" value={formData.userPoints} onChange={handleChange} placeholder="Points" type="number" />
+          <input className="frmSU" name="userBadgeTier" value={formData.userBadgeTier} onChange={handleChange} placeholder="Badge Tier" />
+          <button className="signUp formSubmit" type="submit" disabled={isSaving}>
             {isSaving ? "Saving..." : "Save Profile"}
           </button>
         </form>
       )}
-      <div className="procanImage">
-        {status && <p className="formStatus">{status}</p>}
-      </div>
-      <HomeWidget currentUser={loggedUserInfo} />
-      <div className="openProContainer">
-        <div className="blossom">
-          <img
-            src="https://cdna.artstation.com/p/assets/images/images/074/370/650/original/anders-gjendem-superearthspin2.gif?1711920491"
-            alt=""
-            className="badgeMove"
-          />
-          <p className="procanSlice fontdiner-swanky-regular">
-            {formData.userBadgeTier}
-          </p>
-        </div>
-        <div className="bubbles">
-          Events Attended:
-          <hr />
+
+      {status && <p className="formStatus">{status}</p>}
+
+      <section className="profileModalGrid">
+        <HomeWidget currentUser={loggedUserInfo} />
+        <div className="profileTicketsPanel">
+          <h3 className="fontdiner-swanky-regular">Attendance Passport</h3>
           {attendedEvents.length > 0 ? (
-            attendedEvents.map((attendance, index) => (
-              <img
-                key={
-                  attendance._id ||
-                  attendance.eventKey ||
-                  `${attendance.event}-${index}`
-                }
-                src={EVENT_TICKET_IMAGE}
-                alt={attendance.eventName || "Attended event"}
-                className="evTix"
-                title={attendance.eventName}
-              />
-            ))
+            <div className="profileTicketGrid">
+              {attendedEvents.map((attendance, index) => (
+                <img
+                  key={attendance._id || attendance.eventKey || `${attendance.event}-${index}`}
+                  src={EVENT_TICKET_IMAGE}
+                  alt={attendance.eventName || "Attended event"}
+                  className="evTix"
+                  title={attendance.eventName}
+                />
+              ))}
+            </div>
           ) : (
             <p className="emptyAttendance">No events attended yet.</p>
           )}
         </div>
-        {/* <div className="buttercup">
-          
-        </div> */}
-      </div>
-      
+      </section>
     </div>
   );
 }

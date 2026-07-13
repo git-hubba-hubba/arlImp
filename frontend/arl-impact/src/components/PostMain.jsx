@@ -39,7 +39,7 @@ function PostMain({
                 className="postButton"
               />
             </button>
-            <p className="colName">Like {likeCount}</p>
+            <p className="colName">{likeCount}</p>
           </div>
           <div className="btnCol">
             <button className="postActionButton" type="button" onClick={onComment}>
@@ -49,7 +49,7 @@ function PostMain({
                 className="postButton"
               />
             </button>
-            <p className="colName">Comment {commentCount}</p>
+            <p className="colName"> {commentCount}</p>
           </div>
           <div className="btnCol">
             <img
