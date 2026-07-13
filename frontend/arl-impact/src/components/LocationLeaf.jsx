@@ -121,9 +121,9 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
       {typeof arlingtonDistanceMiles === "number" && (
         <div className="locationLeafDistancePanel">
           <p className="modalEyebrow">Estimated Distance</p>
-          <p>
+          {/* <p>
             You are about {formatDistance(arlingtonDistanceMiles)} from the center of Arlington, Texas.
-          </p>
+          </p> */}
           {selectedBusinessWithDistance && (
             <p>
               {typeof selectedBusinessWithDistance.distanceMiles === "number"
@@ -187,7 +187,7 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
           ))}
         </MapContainer>
       </div>
-
+{/* 
       <div className="locationLeafBusinessList">
         {businessesWithDistance.length > 0 ? (
           businessesWithDistance.map((business) => (
@@ -207,7 +207,7 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
             Add business objects with name, lat, lng, and optional iconUrl fields to show local businesses.
           </p>
         )}
-      </div>
+      </div> */}
     </section>
   );
 }
