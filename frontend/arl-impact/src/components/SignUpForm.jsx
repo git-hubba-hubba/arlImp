@@ -117,17 +117,6 @@ function SignUpForm({ onAuthSuccess, onNotify }) {
           {status && <p className="formStatus authStatus">{status}</p>}
         </form>
 
-        <aside className="authSidePanel">
-          <p className="modalEyebrow">Member profile preview</p>
-          <div className="authPreviewCard">
-            <div className="authPreviewAvatar">
-              {formData.userImage ? <img src={formData.userImage} alt="" /> : <span>{formData.username?.charAt(0) || "A"}</span>}
-            </div>
-            <strong>{formData.username || "Arlington Member"}</strong>
-            <span>{formData.userOccupation || "Local impact builder"}</span>
-            <p>Bronze badge ready once your account is created.</p>
-          </div>
-        </aside>
       </div>
     </section>
   );

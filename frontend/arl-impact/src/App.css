@@ -1284,6 +1284,9 @@ body {
   gap: 1em;
   grid-template-columns: 1.35fr 0.75fr;
 }
+.authSignupTemplate .authModalBody {
+  grid-template-columns: 1fr;
+}
 .authFormCard {
   display: grid;
   gap: 0.8em;
