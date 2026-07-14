@@ -223,8 +223,8 @@ body {
   /* height: 4444vh; */
 }
 .impactLogo {
-  height: 60px;
-  width: 100%;
+  height: 40px;
+  /* width: 100%; */
   padding: 5px;
 }
 .navIcon {
@@ -251,16 +251,16 @@ body {
 .navTriFold {
   /* border: solid peru; */
   display: flex;
-  /* justify-content: space-evenly; */
+  justify-content: space-between;
   align-items: center;
 }
 .nFold1 {
   /* border:solid black; */
-  width: 33%;
+  /* width: 33%; */
 }
 .nFold2 {
   /* border: .2px solid blue; */
-  width: 33%;
+  width: 53%;
   display: flex;
   justify-content: space-evenly;
   font-size: 12px;
@@ -269,7 +269,7 @@ body {
 .nFold3 {
   /* border: .2px solid red; */
   padding: 3px;
-  width: 33%;
+  /* width: 33%; */
   display: flex;
   justify-content: space-evenly;
 }
@@ -865,7 +865,7 @@ body {
 }
 .eventModalTitle {
   color: black;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 0;
 }
 .eventModalStats {
@@ -1243,7 +1243,7 @@ body {
 }
 .profileModalName {
   color: black;
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   margin: 0;
 }
 .profileModalActions {
