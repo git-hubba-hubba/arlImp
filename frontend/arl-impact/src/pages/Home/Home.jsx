@@ -1,19 +1,14 @@
-import { useState } from "react";
 import JoinComp from "../../components/JoinComp";
 import AdSliver from "../../components/AdSliver";
 import BusinessQuad from "../../components/BusinessQuad";
 
-import Modal from "../../components/Modal";
 import LoginForm from "../../components/LoginForm";
 import SignUpForm from "../../components/SignUpForm";
 import Theater from "../../components/Theater";
 
-function Home({ onAuthSuccess, onNotify }) {
-  const [activeModal, setActiveModal] = useState(null);
-
+function Home({ onAuthSuccess, onNotify, onOpenModal }) {
   const handleAuthSuccess = (auth) => {
     onAuthSuccess?.(auth);
-    setActiveModal(null);
   };
 
   let adArr = [
@@ -40,28 +35,20 @@ function Home({ onAuthSuccess, onNotify }) {
     <>
       <JoinComp
         onSignUp={() =>
-          setActiveModal({
+          onOpenModal?.({
             title: "Sign Up",
             component: SignUpForm,
             componentProps: { onAuthSuccess: handleAuthSuccess, onNotify },
           })
         }
         onLogin={() =>
-          setActiveModal({
+          onOpenModal?.({
             title: "Log In",
             component: LoginForm,
             componentProps: { onAuthSuccess: handleAuthSuccess },
           })
         }
       />
-      <Modal
-        isOpen={Boolean(activeModal)}
-        onClose={() => setActiveModal(null)}
-        title={activeModal?.title}
-        component={activeModal?.component}
-        componentProps={activeModal?.componentProps}
-      />
-
      
       <AdSliver adObj={adArr[0]} />
       <AdSliver adObj={adArr[1]} />

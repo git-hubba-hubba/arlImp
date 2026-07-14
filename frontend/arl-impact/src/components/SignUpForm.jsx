@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { apiRequest } from "../api";
-import Namespace from "../components/NameSpace";
 
 const initialForm = {
   username: "",
@@ -50,47 +49,87 @@ function SignUpForm({ onAuthSuccess, onNotify }) {
   };
 
   return (
-    <>
-      <Namespace name={"First Time? Register2Join"} />
-      <div className="formFitting">
-        <form onSubmit={handleSubmit}>
-          <input type="text" className="frmSU" placeholder="Username" name="username" value={formData.username} onChange={handleChange} required />
-          <input type="email" className="frmSU" placeholder="Email" name="userEmail" value={formData.userEmail} onChange={handleChange} required />
-          <input type="password" className="frmSU" placeholder="Password" name="userPassword" value={formData.userPassword} onChange={handleChange} required />
-          <input
-            type="password"
-            className="frmSU"
-            placeholder="Confirm Password"
-            name="passwordConfirmation"
-            value={formData.passwordConfirmation}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            className="frmSU"
-            placeholder="Profile Image URL"
-            name="userImage"
-            value={formData.userImage}
-            onChange={handleChange}
-          />
-
-          <input type="text" className="frmSU" placeholder="Occupation" name="userOccupation" value={formData.userOccupation} onChange={handleChange} />
-          <button className="signUp formSubmit" type="submit" disabled={isSaving}>
-            {isSaving ? "Creating..." : "Create Account"}
-          </button>
-          {status && <p className="formStatus">{status}</p>}
-        </form>
-
-        <div className="asideForm">
-          <img
-            src="https://images.unsplash.com/photo-1699730164892-d7c433524ff3?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
-            className="blqForm"
-          />
+    <section className="authModalTemplate authSignupTemplate">
+      <div className="authModalHero">
+        <div>
+          <p className="authModalEyebrow">New Member</p>
+          <h2 className="authModalTitle fontdiner-swanky-regular">Register To Join</h2>
+          <p className="authModalCopy">
+            Create your profile, start with a Bronze badge, and begin collecting attendance points around Arlington.
+          </p>
+        </div>
+        <div className="authBadgeStack">
+          <div>
+            <span>Starting Tier</span>
+            <strong>Bronze</strong>
+          </div>
+          <div>
+            <span>Opening Points</span>
+            <strong>0</strong>
+          </div>
         </div>
       </div>
-    </>
+
+      <div className="authModalBody">
+        <form className="authFormCard authSignupForm" onSubmit={handleSubmit}>
+          <label className="authField">
+            <span>Username</span>
+            <input type="text" className="frmSU" placeholder="Community name" name="username" value={formData.username} onChange={handleChange} required />
+          </label>
+          <label className="authField">
+            <span>Email</span>
+            <input type="email" className="frmSU" placeholder="name@example.com" name="userEmail" value={formData.userEmail} onChange={handleChange} required />
+          </label>
+          <label className="authField">
+            <span>Password</span>
+            <input type="password" className="frmSU" placeholder="Create a password" name="userPassword" value={formData.userPassword} onChange={handleChange} required />
+          </label>
+          <label className="authField">
+            <span>Confirm Password</span>
+            <input
+              type="password"
+              className="frmSU"
+              placeholder="Confirm password"
+              name="passwordConfirmation"
+              value={formData.passwordConfirmation}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label className="authField authFieldWide">
+            <span>Profile Image URL</span>
+            <input
+              type="text"
+              className="frmSU"
+              placeholder="Optional image link"
+              name="userImage"
+              value={formData.userImage}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="authField authFieldWide">
+            <span>Occupation</span>
+            <input type="text" className="frmSU" placeholder="Artist, owner, volunteer..." name="userOccupation" value={formData.userOccupation} onChange={handleChange} />
+          </label>
+          <button className="signUp formSubmit authSubmit" type="submit" disabled={isSaving}>
+            {isSaving ? "Creating..." : "Create Account"}
+          </button>
+          {status && <p className="formStatus authStatus">{status}</p>}
+        </form>
+
+        <aside className="authSidePanel">
+          <p className="modalEyebrow">Member profile preview</p>
+          <div className="authPreviewCard">
+            <div className="authPreviewAvatar">
+              {formData.userImage ? <img src={formData.userImage} alt="" /> : <span>{formData.username?.charAt(0) || "A"}</span>}
+            </div>
+            <strong>{formData.username || "Arlington Member"}</strong>
+            <span>{formData.userOccupation || "Local impact builder"}</span>
+            <p>Bronze badge ready once your account is created.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
   );
 }
 

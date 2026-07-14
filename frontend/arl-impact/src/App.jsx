@@ -109,7 +109,13 @@ function App() {
         </div>
 
         <div className="midPanel">
-          {currentBoard === "Home" ? <><Home onAuthSuccess={handleAuthSuccess} onNotify={addNotification}/></> : null}
+          {currentBoard === "Home" ? (
+            <Home
+              onAuthSuccess={handleAuthSuccess}
+              onNotify={addNotification}
+              onOpenModal={openModal}
+            />
+          ) : null}
           {currentBoard === "Feed" ? (
             <>
               <FeedMain currentUser={auth?.user} />

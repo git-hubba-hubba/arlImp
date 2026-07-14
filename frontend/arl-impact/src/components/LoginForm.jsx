@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { apiRequest } from "../api";
-import Namespace from "../components/NameSpace";
 
 function LoginForm({ onAuthSuccess }) {
   const [formData, setFormData] = useState({
@@ -38,27 +37,54 @@ function LoginForm({ onAuthSuccess }) {
   };
 
   return (
-    <>
-    <Namespace name={"Already A Member? Sign In"}/>
-      <div className="formFitting">
-        <form onSubmit={handleSubmit}>
-          <input type="email" className="frmSU" placeholder="Email" name="userEmail" value={formData.userEmail} onChange={handleChange} required />
-          <input type="password" className="frmSU" placeholder="Password" name="userPassword" value={formData.userPassword} onChange={handleChange} required />
-          <button className="signUp formSubmit" type="submit" disabled={isSaving}>
-            {isSaving ? "Signing In..." : "Sign In"}
-          </button>
-          {status && <p className="formStatus">{status}</p>}
-        </form>
-
-        <div className="asideForm">
-          <img
-            src="https://images.unsplash.com/photo-1779896412033-a488b4472745?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8"
-            alt=""
-            className="blqForm"
-          />
+    <section className="authModalTemplate authLoginTemplate">
+      <div className="authModalHero">
+        <div>
+          <p className="authModalEyebrow">Member Access</p>
+          <h2 className="authModalTitle fontdiner-swanky-regular">Welcome Back</h2>
+          <p className="authModalCopy">
+            Jump back into Arlington Impact, check your notifications, manage events, and keep building your local footprint.
+          </p>
+        </div>
+        <div className="authBadgeStack">
+          <div>
+            <span>Impact</span>
+            <strong>Dashboard</strong>
+          </div>
+          <div>
+            <span>Member</span>
+            <strong>Check In</strong>
+          </div>
         </div>
       </div>
-    </>
+
+      <div className="authModalBody">
+        <form className="authFormCard" onSubmit={handleSubmit}>
+          <label className="authField">
+            <span>Email</span>
+            <input type="email" className="frmSU" placeholder="name@example.com" name="userEmail" value={formData.userEmail} onChange={handleChange} required />
+          </label>
+          <label className="authField">
+            <span>Password</span>
+            <input type="password" className="frmSU" placeholder="Enter your password" name="userPassword" value={formData.userPassword} onChange={handleChange} required />
+          </label>
+          <button className="signUp formSubmit authSubmit" type="submit" disabled={isSaving}>
+            {isSaving ? "Signing In..." : "Sign In"}
+          </button>
+          {status && <p className="formStatus authStatus">{status}</p>}
+        </form>
+
+        <aside className="authSidePanel">
+          <p className="modalEyebrow">Your account unlocks</p>
+          <div className="authPerkGrid">
+            <span>Saved events</span>
+            <span>Direct messages</span>
+            <span>Badges</span>
+            <span>Attendance points</span>
+          </div>
+        </aside>
+      </div>
+    </section>
   );
 }
 

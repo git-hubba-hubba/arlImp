@@ -134,15 +134,18 @@
 
   overflow-y: auto;
 
+  background-color: white;
   background:
     linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.97)),
     url("./assets/impact-abstract-bg.png") center / cover no-repeat;
   border-radius: 12px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
   padding: 25px;
   position: relative;
+  z-index: 10000;
 
-  transform: scale(.95);
-  opacity: 0;
+  transform: scale(1);
+  opacity: 1;
 
   transition:
     opacity 250ms ease,
@@ -189,7 +192,10 @@
   }
   .eventModalHero,
   .profileModalHero,
-  .profileModalGrid {
+  .profileModalGrid,
+  .authModalHero,
+  .authModalBody,
+  .authSignupForm {
     grid-template-columns: 1fr;
   }
   .eventModalStats,
@@ -1187,13 +1193,19 @@ body {
   border:solid white;
 }
 .frmSU{
-  border: .8 solid black;
+  border: 0.8px solid lightblue;
   background-color: white;
-  border-radius:12px;
-  text-align:center;
-  width:65%;
-  margin:1em;
-  color:peru;
+  border-radius:10px;
+  box-sizing: border-box;
+  color:black;
+  margin:0;
+  padding: 0.8em;
+  width:100%;
+}
+.frmSU:focus {
+  border-color: peru;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.18);
 }
 .formSubmit {
   margin: 0.5em;
@@ -1202,6 +1214,149 @@ body {
   color: peru;
   font-size: 14px;
   margin: 0.75em;
+}
+.authModalTemplate {
+  color: black;
+  display: grid;
+  gap: 1em;
+}
+.authModalHero {
+  align-items: stretch;
+  background:
+    linear-gradient(rgba(173, 216, 230, 0.88), rgba(255, 255, 255, 0.82)),
+    url("./assets/impact-abstract-bg.png") center / cover no-repeat;
+  border: 0.2px solid lightblue;
+  border-radius: 14px;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 1.5fr 0.8fr;
+  padding: 1.25em;
+}
+.authModalEyebrow {
+  color: peru;
+  font-size: 0.78rem;
+  font-weight: bold;
+  margin: 0 0 0.3em;
+  text-transform: uppercase;
+}
+.authModalTitle {
+  color: black;
+  font-size: 2.35rem;
+  line-height: 1;
+  margin: 0;
+}
+.authModalCopy {
+  font-size: 1rem;
+  line-height: 1.45;
+  margin-bottom: 0;
+  max-width: 620px;
+}
+.authBadgeStack {
+  display: grid;
+  gap: 0.7em;
+}
+.authBadgeStack div,
+.authSidePanel,
+.authFormCard {
+  background: rgba(255, 255, 255, 0.78);
+  border: 0.2px solid lightblue;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+.authBadgeStack div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.9em;
+}
+.authBadgeStack span,
+.authField span,
+.authPreviewCard span {
+  color: peru;
+  font-size: 0.82rem;
+}
+.authBadgeStack strong {
+  color: black;
+  font-size: 1.25rem;
+}
+.authModalBody {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 1.35fr 0.75fr;
+}
+.authFormCard {
+  display: grid;
+  gap: 0.8em;
+  padding: 1em;
+}
+.authSignupForm {
+  grid-template-columns: 1fr 1fr;
+}
+.authField {
+  display: grid;
+  gap: 0.35em;
+}
+.authFieldWide,
+.authSubmit,
+.authStatus {
+  grid-column: 1 / -1;
+}
+.authSubmit,
+.authSubmit:hover {
+  justify-self: start;
+  margin: 0.25em 0 0;
+  width: auto;
+}
+.authStatus {
+  margin: 0;
+}
+.authSidePanel {
+  padding: 1em;
+}
+.authPerkGrid {
+  display: grid;
+  gap: 0.6em;
+  grid-template-columns: 1fr 1fr;
+}
+.authPerkGrid span {
+  border: 0.2px solid lightblue;
+  border-radius: 10px;
+  padding: 0.75em;
+}
+.authPreviewCard {
+  align-items: center;
+  border: 0.2px solid lightblue;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 1em;
+  text-align: center;
+}
+.authPreviewAvatar {
+  align-items: center;
+  background: lightblue;
+  border: 3px solid white;
+  border-radius: 50%;
+  display: flex;
+  height: 96px;
+  justify-content: center;
+  overflow: hidden;
+  width: 96px;
+}
+.authPreviewAvatar img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.authPreviewAvatar span {
+  color: white;
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.authPreviewCard p {
+  margin-bottom: 0;
 }
 .profileEditForm,
 .crudForm {
