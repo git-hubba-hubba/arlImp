@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function Modal({
   isOpen,
@@ -51,9 +52,10 @@ export default function Modal({
     )
     : children;
 
+  if (isOpen && !Component && !children) return null;
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       className={`modal-overlay ${show ? "show" : ""}`}
       onClick={handleClose}
@@ -75,6 +77,7 @@ export default function Modal({
           {modalContent}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

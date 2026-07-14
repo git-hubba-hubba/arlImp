@@ -6,6 +6,7 @@ import { createNotification, getStoredNotifications, setStoredNotifications } fr
 import Nav from "./components/Nav";
 import Modal from "./components/Modal";
 import EventModal from "./components/EventModal";
+import EventCommentsModal from "./components/EventCommentsModal";
 import MemberModal from "./components/MemberModal";
 import FeedFilter from "./pages/Feed/FeedFilter";
 import MembersFilter from "./pages/Member/MemberFilter";
@@ -149,7 +150,18 @@ function App() {
                   openModal({
                     title: event.eventName,
                     component: EventModal,
-                    componentProps: { event },
+                    componentProps: {
+                      event,
+                      onOpenComments: () =>
+                        openModal({
+                          title: "",
+                          component: EventCommentsModal,
+                          componentProps: {
+                            currentUser: auth?.user,
+                            event,
+                          },
+                        }),
+                    },
                   })
                 }
               />

@@ -113,9 +113,10 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: 24px;
 
   opacity: 0;
   transition: opacity 250ms ease;
@@ -132,6 +133,8 @@
   max-width: 1200px;
   max-height: 90vh;
 
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
 
   background-color: white;
@@ -143,6 +146,7 @@
   padding: 25px;
   position: relative;
   z-index: 10000;
+  margin: auto;
 
   transform: scale(1);
   opacity: 1;
@@ -182,10 +186,23 @@
 }
 
 .modal-content {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
   margin-top: 20px;
+  min-height: 0;
+  width: 100%;
+}
+
+.modal-content > * {
+  width: 100%;
 }
 
 @media (max-width: 768px) {
+  .modal-overlay {
+    padding: 12px;
+  }
   .modal-container {
     width: 95vw;
     padding: 18px;
@@ -605,42 +622,142 @@ body {
   width: 20px;
   background-color: lightblue;
 }
-.commentModalPanel {
+.commentThreadModal {
+  color: black;
+  display: grid;
+  gap: 1em;
+  max-width: 860px;
+}
+.commentThreadHero {
+  align-items: center;
+  background:
+    linear-gradient(rgba(173, 216, 230, 0.86), rgba(255, 255, 255, 0.84)),
+    url("./assets/impact-abstract-bg.png") center / cover no-repeat;
+  border: 0.2px solid lightblue;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 1em;
+}
+.commentThreadEyebrow {
+  color: peru;
+  font-size: 0.78rem;
+  font-weight: bold;
+  margin: 0 0 0.25em;
+  text-transform: uppercase;
+}
+.commentThreadTitle {
+  color: black;
+  font-size: 2rem;
+  line-height: 1;
+  margin: 0;
+}
+.commentThreadCount {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.78);
+  border: 0.2px solid lightblue;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
+  min-width: 110px;
+  padding: 0.75em;
+}
+.commentThreadCount span {
+  color: peru;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.commentThreadCount strong {
+  font-size: 0.82rem;
+}
+.commentThreadBody {
+  background: rgba(255, 255, 255, 0.78);
+  border: 0.2px solid lightblue;
+  border-radius: 14px;
+  display: grid;
   gap: 1em;
+  padding: 1em;
 }
 .commentList {
-  border: 0.2px solid lightblue;
-  border-radius: 8px;
-  max-height: 300px;
+  display: grid;
+  gap: 0.75em;
+  max-height: 330px;
   overflow-y: auto;
-  padding: 0.5em;
+  padding-right: 0.25em;
 }
 .commentItem {
-  border-bottom: 0.2px solid lightblue;
-  padding: 0.5em 0;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.86);
+  border: 0.2px solid lightblue;
+  border-radius: 12px;
+  display: grid;
+  gap: 0.75em;
+  grid-template-columns: 44px 1fr;
+  padding: 0.85em;
 }
-.commentItem:last-child {
-  border-bottom: none;
+.commentAvatar {
+  align-items: center;
+  background: lightblue;
+  border: 2px solid white;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  font-weight: bold;
+  height: 40px;
+  justify-content: center;
+  text-transform: uppercase;
+  width: 40px;
 }
 .commentAuthor {
   color: peru;
   font-weight: bold;
   margin: 0;
 }
-.commentText,
+.commentText {
+  line-height: 1.4;
+  margin: 0.25em 0 0;
+}
 .emptyComments {
+  background: rgba(255, 255, 255, 0.86);
+  border: 0.2px dashed lightblue;
+  border-radius: 12px;
+  margin: 0;
+  padding: 1em;
+  text-align: center;
+}
+.emptyComments p {
   margin: 0.35em 0 0;
 }
 .commentForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border-top: 0.2px solid lightblue;
+  display: grid;
+  gap: 0.6em;
+  padding-top: 1em;
+}
+.commentComposerLabel {
+  color: peru;
+  font-size: 0.85rem;
+  font-weight: bold;
 }
 .commentTextarea {
-  min-height: 90px;
+  min-height: 110px;
   resize: vertical;
+}
+.commentComposerFooter {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+.commentComposerFooter span {
+  color: #666;
+  font-size: 0.82rem;
+}
+.commentSubmitButton,
+.commentSubmitButton:hover {
+  margin: 0;
+  width: auto;
 }
 .evntSplashName {
   color: lightblue;
@@ -892,6 +1009,10 @@ body {
 .eventModalStats strong {
   display: block;
   margin-top: 0.25em;
+}
+.eventModalActions {
+  border-top: 0.2px solid lightblue;
+  padding-top: 0.75em;
 }
 .eventModal-soon .eventModalHeroCopy {
   background: #bfefff;

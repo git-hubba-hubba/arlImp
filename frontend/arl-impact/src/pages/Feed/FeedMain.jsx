@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiRequest } from "../../api";
+import CommentThreadModal from "../../components/CommentThreadModal";
 import Modal from "../../components/Modal";
 import PostMain from "../../components/PostMain";
 import PostFormModal from "../../components/PostFormModal";
@@ -142,46 +143,6 @@ const generateCategoryPosts = (category) => {
 
 const getPostKey = (post, index = 0) =>
   post._id || post.id || post.postTitle || post.title || `post-${index}`;
-
-function PostCommentsModal({
-  comments,
-  commentText,
-  onCommentChange,
-  onSubmit,
-  post,
-}) {
-  const postTitle = post?.postTitle || post?.title || "this post";
-
-  return (
-    <div className="commentModalPanel">
-      <p className="modalEyebrow">{postTitle}</p>
-      <div className="commentList">
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div className="commentItem" key={comment.id}>
-              <p className="commentAuthor">{comment.author}</p>
-              <p className="commentText">{comment.text}</p>
-            </div>
-          ))
-        ) : (
-          <p className="emptyComments">No comments yet.</p>
-        )}
-      </div>
-      <form className="commentForm" onSubmit={onSubmit}>
-        <textarea
-          className="frmSU commentTextarea"
-          value={commentText}
-          onChange={(e) => onCommentChange(e.target.value)}
-          placeholder="Add a comment..."
-          required
-        />
-        <button className="signUp formSubmit" type="submit">
-          Add Comment
-        </button>
-      </form>
-    </div>
-  );
-}
 
 function FeedMain({ currentUser }) {
   const [currentFeed, setCurrentFeed] = useState("");
@@ -465,14 +426,17 @@ function FeedMain({ currentUser }) {
           setActiveCommentPost(null);
           setCommentText("");
         }}
-        title="Comments"
-        component={PostCommentsModal}
+        title=""
+        component={CommentThreadModal}
         componentProps={{
           comments: postEngagement[activeCommentPost?._commentKey]?.comments || [],
           commentText,
+          emptyMessage: "No one has commented on this post yet.",
           onCommentChange: setCommentText,
           onSubmit: handleSubmitComment,
-          post: activeCommentPost,
+          placeholder: "Add a comment to this post...",
+          subjectLabel: activeCommentPost?.postCategory || "Social Feed",
+          subjectTitle: activeCommentPost?.postTitle || activeCommentPost?.title || "Comments",
         }}
       />
       <div className="mainPostContainer">

@@ -22,7 +22,7 @@ function getEventMoodLabel(mood) {
   return "Open Event";
 }
 
-function EventModal({ event }) {
+function EventModal({ event, onOpenComments }) {
   const eventImage = getEventImageSrc(event);
   const eventMood = getEventMood(event.eventDate);
   const eventPoints = event.attendancePoints ?? 100;
@@ -66,6 +66,12 @@ function EventModal({ event }) {
           <p>{event.eventDescription}</p>
         </section>
       )}
+
+      <section className="eventModalActions">
+        <button className="signUp profileAction" type="button" onClick={onOpenComments}>
+          Comments
+        </button>
+      </section>
     </div>
   );
 }
