@@ -21,6 +21,7 @@ import { featuredBusinesses } from "./data/featuredBusinesses";
 import HomeFilter from "./pages/Home/HomeFilter";
 import HomeWidget from './pages/Home/HomeWidget'
 import Home from "./pages/Home/Home";
+import DirectoryDashboard from "./pages/Directory/DirectoryDashboard";
 function App() {
   // NavLogic
   const [currentBoard, setCurrentBoard] = useState("Home");
@@ -107,6 +108,7 @@ function App() {
               <EventFilter />
             </>
           ) : null}
+          {currentBoard === "Directory" ? <HomeFilter /> : null}
         </div>
 
         <div className="midPanel">
@@ -167,6 +169,9 @@ function App() {
               />
             </>
           ) : null}
+          {currentBoard === "Directory" ? (
+            <DirectoryDashboard listings={featuredBusinesses} />
+          ) : null}
         </div>
         <div className="rightPanel">
           {currentBoard === "Home" ? (
@@ -190,6 +195,9 @@ function App() {
             <>
               <EventSmWid />
             </>
+          ) : null}
+          {currentBoard === "Directory" ? (
+            <HomeWidget businesses={featuredBusinesses} currentUser={auth?.user} userLocation={userLocation} />
           ) : null}
         </div>
       </div>

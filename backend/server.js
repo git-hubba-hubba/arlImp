@@ -4,11 +4,12 @@ const app = require("./app");
 const connectDB = require("./config/db");
 
 const PORT = process.env.PORT || 5001;
+const HOST = process.env.HOST || "0.0.0.0";
 
 connectDB()
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`ARL Impact API running on port ${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.log(`ARL Impact API running at http://${HOST}:${PORT}`);
     });
   })
   .catch((error) => {

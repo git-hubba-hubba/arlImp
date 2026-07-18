@@ -1,15 +1,16 @@
-import {React,useState} from 'react'
-
-function QuadSlice({quadObj,setCurrentDisplay}) {
-    
+function QuadSlice({ quadObj, setCurrentDisplay }) {
   return (
-    <div className="thisQuad" onClick={()=>{
-        setCurrentDisplay(quadObj.info)
-    }}>
-        <img src={quadObj.img} alt="" className="qImg" />
-        <div className="qContent">{quadObj.title}</div>
-    </div>
-  )
+    <button
+      className="thisQuad"
+      type="button"
+      onClick={() => {
+        setCurrentDisplay(quadObj.info);
+      }}
+    >
+      <img src={quadObj.img} alt="" className="qImg" />
+      <span className="qContent">{quadObj.title}</span>
+    </button>
+  );
 }
 
-export default QuadSlice
+export default QuadSlice;

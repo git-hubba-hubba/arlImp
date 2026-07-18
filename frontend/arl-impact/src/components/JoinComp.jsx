@@ -3,7 +3,6 @@ import React from 'react'
 function JoinComp({ onSignUp, onLogin }) {
   return (
     <>
-    <img src="/impactteam.png" alt="" className="mpactTeam" />
       <div className="joinNowContainer">
           <h1 className="joinMax fontdiner-swanky-regular">Join Our Community</h1>
           <p style={{padding:"1em"}}>

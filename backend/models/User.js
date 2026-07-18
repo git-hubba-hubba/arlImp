@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    profileHeaderMedia: {
+      type: String,
+      default: "",
+    },
     userPoints: {
       type: Number,
       default: 0,
@@ -41,6 +45,7 @@ const userSchema = new mongoose.Schema(
     userBadgeTier: {
       type: String,
       default: "Bronze",
+      enum: ["Bronze", "Silver", "Gold", "Platinum"],
       trim: true,
     },
     attendedEvents: [

@@ -227,10 +227,11 @@
 /* --------------------------{3rdP} */
 body {
   width: 100vw;
-  height: 4444vh;
-  font-family: serif;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: black;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.88)),
+    linear-gradient(135deg, rgba(173, 216, 230, 0.58), rgba(255, 255, 255, 0.82) 38%, rgba(205, 133, 63, 0.26)),
     url("./assets/impact-abstract-bg.png") center top / cover fixed no-repeat;
 }
 .fontdiner-swanky-regular {
@@ -238,12 +239,351 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+.homePage {
+  display: grid;
+  gap: 1em;
+  padding-bottom: 1em;
+}
+.homeSection {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(173, 216, 230, 0.2)),
+    rgba(255, 255, 255, 0.5);
+  border: 0.2px solid rgba(135, 206, 250, 0.72);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
+  display: grid;
+  gap: 0.75em;
+  margin: 1em;
+  padding: 0.85em;
+}
+.homeSection:nth-of-type(even) {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(205, 133, 63, 0.18)),
+    rgba(255, 255, 255, 0.5);
+}
+.homeSection:nth-of-type(3n) {
+  border-color: rgba(205, 133, 63, 0.76);
+}
+.homeSection .fancyName {
+  margin: 0;
+  text-align: left;
+}
+.homeSplash {
+  background: linear-gradient(135deg, rgba(173, 216, 230, 0.48), rgba(255, 255, 255, 0.74) 56%, rgba(205, 133, 63, 0.2));
+  border: 0.2px solid lightblue;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.1);
+  display: grid;
+  gap: 1em;
+  margin: 1em;
+  padding: 0.85em;
+  position: relative;
+}
+.homeSplash .mpactTeam {
+  border: 0.2px solid lightblue;
+  max-height: 520px;
+  object-fit: cover;
+  width: 100%;
+}
+.homeSplashTitle {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(173, 216, 230, 0.36));
+  border: 0.2px solid lightblue;
+  color: black;
+  padding: 1.2em;
+  text-align: center;
+}
+.homeSplashTitle h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5vw, 4.4rem);
+  font-weight: 500;
+  margin: 0;
+}
+.homeSplashTitle span {
+  color: peru;
+  display: block;
+  font-size: clamp(1rem, 2vw, 1.45rem);
+  margin: 0.45em 0 0;
+}
+.homePostcardSlider {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(205, 133, 63, 0.16));
+  border: 0.2px solid rgba(135, 206, 250, 0.72);
+  margin: 1em;
+  overflow: hidden;
+  padding: 0.85em;
+}
+.postcardTrack {
+  display: flex;
+  gap: 1em;
+  overflow-x: auto;
+  padding-bottom: 0.6em;
+  scroll-snap-type: x mandatory;
+}
+.postcardSlide {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(173, 216, 230, 0.2));
+  border: 0.2px solid lightblue;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+  color: black;
+  flex: 0 0 min(78vw, 420px);
+  scroll-snap-align: start;
+}
+.postcardSlide img {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  width: 100%;
+}
+.postcardCaption {
+  display: grid;
+  gap: 0.35em;
+  padding: 0.85em;
+}
+.postcardCaption strong {
+  color: black;
+  font-size: 1.15rem;
+}
+.postcardCaption span {
+  color: #333;
+  font-size: 0.92rem;
+}
+.homeCommunityAside,
+.directoryLibrary,
+.prizeLibrary {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(173, 216, 230, 0.18));
+  border: 0.2px solid lightblue;
+  color: black;
+  display: grid;
+  gap: 1em;
+  margin: 0;
+  padding: 1em;
+}
+.homeCommunityAside {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.homeAsideCard,
+.directoryGroup,
+.prizeCard {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(173, 216, 230, 0.12));
+  border: 0.2px solid rgba(135, 206, 250, 0.8);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  padding: 0.9em;
+}
+.homeAsideCard p,
+.directoryLibrary h2,
+.prizeLibrary h2,
+.directoryGroup h3 {
+  color: black;
+  margin: 0 0 0.35em;
+}
+.homeAsideCard span,
+.directoryGroup span,
+.prizeCard span,
+.prizeCard small {
+  color: #333;
+}
+.directoryGroupGrid,
+.prizeLibraryGrid {
+  display: grid;
+  gap: 0.8em;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.directoryGroup div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+}
+.directoryGroup span {
+  background: rgba(173, 216, 230, 0.26);
+  border: 0.2px solid lightblue;
+  padding: 0.35em 0.55em;
+}
+.prizeCard {
+  display: grid;
+  gap: 0.35em;
+}
+.prizeCard strong {
+  color: peru;
+  font-size: 1.1rem;
+}
+.homeStepGrid {
+  display: grid;
+  gap: 0.75em;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.homeTogetherTitle {
+  background: linear-gradient(135deg, lightblue, white 48%, peru);
+  border: 0.2px solid white;
+  color: black;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 4vw, 3.2rem);
+  font-weight: 500;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+}
+.directoryPage {
+  color: black;
+  display: grid;
+  gap: 1em;
+  padding: 1em;
+}
+.directoryHeroPanel,
+.directorySearchPanel,
+.directoryDetailPanel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(173, 216, 230, 0.24), rgba(205, 133, 63, 0.12));
+  border: 0.2px solid lightblue;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
+  padding: 1em;
+}
+.directoryHeroPanel {
+  align-items: center;
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+}
+.directoryHeroPanel h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 500;
+  margin: 0.1em 0;
+}
+.directoryHeroPanel span,
+.directorySearchField span,
+.directoryDetailMeta span {
+  color: #333;
+}
+.directoryStatStack {
+  align-items: center;
+  background: linear-gradient(135deg, lightblue, white);
+  border: 0.2px solid white;
+  display: flex;
+  flex-direction: column;
+  min-width: 96px;
+  padding: 0.9em;
+}
+.directoryStatStack strong {
+  color: peru;
+  font-size: 2rem;
+}
+.directorySearchPanel {
+  display: grid;
+  gap: 0.85em;
+}
+.directorySearchField {
+  display: grid;
+  gap: 0.4em;
+}
+.directorySearchField input {
+  border: 0.2px solid lightblue;
+  color: black;
+  font-size: 1rem;
+  padding: 0.8em;
+  width: 100%;
+}
+.directoryCategoryRail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55em;
+}
+.directoryCategoryButton {
+  background: rgba(255, 255, 255, 0.82);
+  border: 0.2px solid lightblue;
+  color: black;
+  cursor: pointer;
+  padding: 0.55em 0.75em;
+}
+.directoryCategoryButton:hover,
+.directoryCategoryActive {
+  background: linear-gradient(135deg, lightblue, peru);
+  border-color: peru;
+  color: white;
+}
+.directoryLayout {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: minmax(0, 1.5fr) minmax(230px, 0.85fr);
+}
+.directoryListingGrid {
+  display: grid;
+  gap: 0.75em;
+}
+.directoryListingCard {
+  align-items: stretch;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(173, 216, 230, 0.14));
+  border: 0.2px solid lightblue;
+  color: black;
+  cursor: pointer;
+  display: grid;
+  gap: 0.8em;
+  grid-template-columns: 10px 1fr;
+  padding: 0;
+  text-align: left;
+}
+.directoryListingCard:hover,
+.directoryListingActive {
+  border-color: peru;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+}
+.directoryListingAccent {
+  display: block;
+  min-height: 100%;
+}
+.directoryListingCard div {
+  padding: 0.85em 0.85em 0.85em 0;
+}
+.directoryListingCard p {
+  color: peru;
+  font-size: 0.78rem;
+  font-weight: bold;
+  margin: 0 0 0.35em;
+  text-transform: uppercase;
+}
+.directoryListingCard h3,
+.directoryDetailPanel h2 {
+  color: black;
+  margin: 0 0 0.35em;
+}
+.directoryListingCard small {
+  color: #333;
+}
+.directoryDetailPanel {
+  align-self: start;
+  display: grid;
+  gap: 0.75em;
+  position: sticky;
+  top: 1em;
+}
+.directoryDetailAddress {
+  background: rgba(255, 255, 255, 0.76);
+  border: 0.2px solid lightblue;
+  padding: 0.75em;
+}
+.directoryDetailMeta {
+  display: grid;
+  gap: 0.4em;
+}
+.directoryMapButton {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  width: auto;
+}
+.directoryMapButton:hover {
+  width: auto;
+}
+.directoryEmptyState {
+  background: rgba(255, 255, 255, 0.84);
+  border: 0.2px dashed lightblue;
+  color: black;
+  display: grid;
+  gap: 0.35em;
+  padding: 1em;
+}
 .masterJmwofford {
   /* border: 0.2px solid red; */
   margin: 0.2em;
   display: flex;
   justify-content: space-evenly;
   /* height: 4444vh; */
+}
+.midPanel {
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.08);
 }
 .impactLogo {
   height: 40px;
@@ -267,11 +607,12 @@ body {
 .navMain {
   /* border: 0.2px solid black; */
   /* height:12vh; */
-  background: rgba(255, 255, 255, 0.86);
+  background: linear-gradient(135deg, rgba(173, 216, 230, 0.92), rgba(255, 255, 255, 0.96) 48%, rgba(205, 133, 63, 0.24));
   backdrop-filter: blur(8px);
   border-bottom: 0.2px solid rgba(173, 216, 230, 0.8);
   position: relative;
   z-index: 5000;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
 }
 .navTriFold {
   /* border: solid peru; */
@@ -291,6 +632,18 @@ body {
   font-size: 12px;
   color: black;
 }
+.navGuide {
+  background: rgba(255, 255, 255, 0.78);
+  border: 0.2px solid rgba(173, 216, 230, 0.9);
+  color: black;
+  cursor: pointer;
+  padding: 0.35em 0.65em;
+}
+.navGuide:hover {
+  background: peru;
+  border-color: peru;
+  color: white;
+}
 .nFold3 {
   /* border: .2px solid red; */
   padding: 3px;
@@ -306,7 +659,7 @@ body {
 }
 .navHamburger {
   align-items: center;
-  background: white;
+  background: linear-gradient(135deg, white, rgba(173, 216, 230, 0.34));
   border: 0.2px solid lightblue;
   cursor: pointer;
   display: flex;
@@ -318,7 +671,7 @@ body {
   width: 32px;
 }
 .navHamburger:hover {
-  background: lightblue;
+  background: linear-gradient(135deg, lightblue, rgba(205, 133, 63, 0.42));
 }
 .navHamburger span {
   background: black;
@@ -327,7 +680,7 @@ body {
   width: 18px;
 }
 .navDropdown {
-  background: rgba(255, 255, 255, 0.96);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(173, 216, 230, 0.24));
   border: 0.2px solid lightblue;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
   display: grid;
@@ -352,7 +705,7 @@ body {
   width: 100%;
 }
 .navDropdownItem:hover {
-  background: lightblue;
+  background: linear-gradient(135deg, lightblue, rgba(205, 133, 63, 0.28));
 }
 .navDropdownIcon {
   height: 20px;
@@ -375,7 +728,7 @@ body {
   border-radius: 22px;
   align-items: center;
   padding: 1em;
-  background: rgba(255, 255, 255, 0.76);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(173, 216, 230, 0.2));
   backdrop-filter: blur(6px);
 }
 .filled {
@@ -404,7 +757,7 @@ body {
   border-radius: 22px;
   /* color:black; */
   padding: 1em;
-  background: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(205, 133, 63, 0.14));
   backdrop-filter: blur(6px);
 }
 .homeWidgetPanel {
@@ -415,7 +768,7 @@ body {
   border: 0.2px solid lightblue;
   margin: 1em;
   padding: 0.75em;
-  background: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(173, 216, 230, 0.2));
   backdrop-filter: blur(6px);
 }
 .homeWidgetSection h3 {
@@ -468,38 +821,43 @@ body {
   width: 100%;
 }
 .joinNowContainer {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(173, 216, 230, 0.2));
+  border: 0.2px solid lightblue;
+  color: black;
   padding: 1em;
 }
 .joinMax {
   color: lightblue;
+  margin: 0 0 0.35em;
 }
 .btnContainer {
   display: flex;
   justify-content: space-evenly;
 }
 .signUp {
-  color:lightblue;
+  color:navy;
   border: solid lightblue;
   width: 40%;
-  background: white;
+  background: linear-gradient(135deg, white, rgba(173, 216, 230, 0.32));
   cursor: pointer;
   padding: 0.5em;
+  font-weight: bold;
 }
 .signUp:hover {
-  border: solid lightblue;
+  border: solid peru;
   width: 40%;
-  background-color: lightblue;
+  background: linear-gradient(135deg, lightblue, peru);
   color: white;
 }
 .sliverComp {
-  border: 0.2px solid grey;
+  border: 0.2px solid lightblue;
   display: flex;
   /* padding: 1em; */
   justify-content: space-around;
-  margin: 1em;
+  margin: 0;
   border-radius: 12px;
   align-items: center;
-  background: rgba(255, 255, 255, 0.76);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(173, 216, 230, 0.18));
   backdrop-filter: blur(6px);
 }
 .descSliver {
@@ -508,6 +866,15 @@ body {
 .sliverIcon {
   height: 30px;
 }
+.sliverTitle {
+  color: black;
+  font-weight: bold;
+}
+.sliverDesc {
+  color: #333;
+  font-size: 0.92rem;
+  margin-bottom: 0;
+}
 .splitA {
   width: 50%;
 }
@@ -515,44 +882,65 @@ body {
   border: solid lightblue;
 }
 .quadContainer {
-  /* border: .2px solid grey; */
-  margin-top: 2em;
+  border: 0.2px solid lightblue;
+  margin-top: 0;
   /* height:44vh; */
-  background: rgba(255, 255, 255, 0.64);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(205, 133, 63, 0.14));
   backdrop-filter: blur(4px);
+  padding: 0.6em;
+}
+.quadGrid {
+  display: grid;
+  gap: 0.4em;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0.4em;
 }
 .quadSep {
   display: flex;
   height: 50%;
 }
 .qImg {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
   width: 100%;
 }
-.quadScreen {
-  /* border:.2px solid lightblue; */
-  margin: 1em;
+.qContent {
   color: black;
+  display: block;
+  font-weight: bold;
+  padding: 0.55em;
+}
+.quadScreen {
+  border: 0.2px solid lightblue;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(173, 216, 230, 0.22));
+  margin: 0.4em;
+  color: black;
+  line-height: 1.5;
+  min-height: 4em;
+  padding: 0.9em;
 }
 .thisQuad {
-  border: 0.2px solid navy;
-  width: 50%;
+  border: 0.2px solid lightblue;
   margin: 0.2em;
   color:black;
-  background: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(173, 216, 230, 0.16));
+  cursor: pointer;
 }
 .thisQuad:hover {
-  border: 0.2px solid navy;
-  width: 50%;
+  border: 0.2px solid peru;
   margin: 0.2em;
-  color:black;  background-color: lightblue;
+  color:black;
+  background: linear-gradient(135deg, lightblue, rgba(205, 133, 63, 0.42));
 }
 .flyerIm {
   border: solid black;
   width: 90%;
 }
 .logoBearer {
+  justify-self: center;
+  margin: 0;
+  max-width: 520px;
   width: 80%;
-  margin: 1em;
 }
 .channelSymbs {
   border: 0.2px solid black;
@@ -611,15 +999,18 @@ body {
   /* height:22vh; */
 }
 .mainPostContainer {
-  /* border: .2px solid black; */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(173, 216, 230, 0.16));
+  border: 0.2px solid rgba(173, 216, 230, 0.72);
   height: 444vh;
+  margin: 1em;
+  padding: 0.75em;
 }
 .singlePost {
-  border: solid grey;
+  border: solid lightblue;
   margin: 2em;
   border-radius: 8px;
   /* height:44vh; */
-  background: rgba(255, 255, 255, 0.84);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(173, 216, 230, 0.14));
   backdrop-filter: blur(8px);
 }
 .topicPost {
@@ -918,13 +1309,39 @@ body {
 }
 .postNavigation {
   width: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(205, 133, 63, 0.14));
+  border: 0.2px solid rgba(173, 216, 230, 0.72);
+  margin-bottom: 1em;
+  padding: 0.75em 0;
 }
 .btnsocialHolster {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
   justify-content: space-evenly;
 }
 .iconSocial {
   width: 30px;
+  cursor: pointer;
+}
+.wale {
+  align-items: center;
+  display: grid;
+  gap: 0.25em;
+  justify-items: center;
+}
+.socialIconLabel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(173, 216, 230, 0.28));
+  border: 0.2px solid lightblue;
+  color: black;
+  cursor: pointer;
+  font-size: 0.72rem;
+  padding: 0.35em 0.55em;
+}
+.socialIconLabel:hover {
+  background: linear-gradient(135deg, lightblue, rgba(205, 133, 63, 0.36));
+  border-color: peru;
+  color: white;
 }
 .btnTag {
   font-size: 10px;
@@ -968,7 +1385,7 @@ body {
   border-radius: 12px;
   width: 150px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(173, 216, 230, 0.16));
   backdrop-filter: blur(6px);
   /* height:250px; */
   /* color:black; */
@@ -999,9 +1416,13 @@ body {
   border: solid black;
 }
 .memberDashHolster {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(205, 133, 63, 0.12));
+  border: 0.2px solid rgba(173, 216, 230, 0.72);
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  margin: 1em;
+  padding: 0.75em;
 }
 .adspaceimg{
   width: 100%;
@@ -1591,9 +2012,34 @@ body {
 .profileModalHero {
   align-items: stretch;
   background: lightblue;
+  background-position: center;
+  background-size: cover;
   display: grid;
   grid-template-columns: 220px 1fr;
   overflow: hidden;
+  position: relative;
+}
+.profileModalHeroCustom {
+  border: 0.2px solid lightblue;
+}
+.profileModalHeroCustom::after {
+  background: rgba(255, 255, 255, 0.22);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+.profileHeaderVideo {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+.profileModalHero > .profileModalImage,
+.profileModalHero > .profileModalIntro {
+  position: relative;
+  z-index: 1;
 }
 .profileModalImage {
   height: 100%;
@@ -1602,6 +2048,7 @@ body {
   width: 100%;
 }
 .profileModalIntro {
+  background: rgba(173, 216, 230, 0.78);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1692,11 +2139,11 @@ body {
   display: grid;
   gap: 0.85em;
   padding: 1em;
-  background: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(173, 216, 230, 0.22), rgba(205, 133, 63, 0.12));
 }
 .rewardsHeader {
   align-items: center;
-  background: lightblue;
+  background: linear-gradient(135deg, lightblue, rgba(255, 255, 255, 0.78), rgba(205, 133, 63, 0.28));
   display: flex;
   justify-content: space-between;
   gap: 1em;
@@ -1708,7 +2155,7 @@ body {
 }
 .rewardsPointBadge {
   align-items: center;
-  background: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(180deg, white, rgba(173, 216, 230, 0.26));
   border: 0.2px solid white;
   display: flex;
   flex-direction: column;
@@ -1726,6 +2173,7 @@ body {
 }
 .rewardsNextMilestone {
   border: 0.2px solid lightblue;
+  background: rgba(255, 255, 255, 0.72);
   padding: 0.75em;
 }
 .rewardsNextMilestone span {
@@ -1735,6 +2183,46 @@ body {
 }
 .rewardsNextMilestone strong {
   color: black;
+}
+.rewardRulesPanel,
+.badgeTierPanel {
+  border: 0.2px solid lightblue;
+  color: black;
+  padding: 0.85em;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(205, 133, 63, 0.12));
+}
+.rewardRulesPanel h4 {
+  margin: 0.15em 0 0;
+}
+.rewardRulesGrid {
+  display: grid;
+  gap: 0.55em;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0.75em;
+}
+.rewardRule {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border: 0.2px solid rgba(135, 206, 250, 0.8);
+  display: flex;
+  gap: 0.75em;
+  justify-content: space-between;
+  padding: 0.6em;
+}
+.rewardRule strong {
+  color: peru;
+  white-space: nowrap;
+}
+.badgeTierList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.badgeTierList span {
+  background: rgba(173, 216, 230, 0.24);
+  border: 0.2px solid lightblue;
+  color: black;
+  padding: 0.45em 0.75em;
 }
 .rewardsRoadmap {
   display: grid;
@@ -1757,12 +2245,13 @@ body {
   justify-content: center;
 }
 .rewardUnlocked .rewardMarker {
-  background: lightblue;
+  background: linear-gradient(135deg, lightblue, peru);
+  color: white;
 }
 .rewardContent {
   border: 0.2px solid lightblue;
   padding: 0.85em;
-  background: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(173, 216, 230, 0.14));
 }
 .rewardCardHeader {
   align-items: flex-start;
@@ -2082,13 +2571,13 @@ color:black;
 @media (max-width: 2280px) {
   body {
     background:
-      linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.88)),
+      linear-gradient(135deg, rgba(173, 216, 230, 0.58), rgba(255, 255, 255, 0.82) 38%, rgba(205, 133, 63, 0.26)),
       url("./assets/impact-abstract-bg.png") center top / cover fixed no-repeat;
   }
   .leftPanel {
     /* border: solid peru; */
     /* display: block; */
-    background-color: rgba(231, 238, 240, 0.72);
+    background: linear-gradient(180deg, rgba(231, 238, 240, 0.82), rgba(173, 216, 230, 0.18));
     display: flex;
     justify-content: space-between;
     width: 20%;
@@ -2098,7 +2587,7 @@ color:black;
     border: 0.2px solid black;
     width: 50%;
     display: block;
-    background: rgba(255, 255, 255, 0.56);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(173, 216, 230, 0.12));
     backdrop-filter: blur(4px);
   }
   .rightPanel {
@@ -2110,7 +2599,7 @@ color:black;
 @media (max-width: 1250px) {
   body {
     background:
-      linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.88)),
+      linear-gradient(135deg, rgba(173, 216, 230, 0.58), rgba(255, 255, 255, 0.84) 44%, rgba(205, 133, 63, 0.24)),
       url("./assets/impact-abstract-bg.png") center top / cover fixed no-repeat;
   }
   .leftPanel {
@@ -2121,7 +2610,7 @@ color:black;
     border: 0.2px solid black;
     width: 70%;
     display: block;
-    background: rgba(255, 255, 255, 0.58);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.66), rgba(173, 216, 230, 0.14));
     backdrop-filter: blur(4px);
   }
   .rightPanel {
@@ -2133,7 +2622,7 @@ color:black;
 @media (max-width: 850px) {
   body {
     background:
-      linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.9)),
+      linear-gradient(135deg, rgba(173, 216, 230, 0.5), rgba(255, 255, 255, 0.88) 46%, rgba(205, 133, 63, 0.2)),
       url("./assets/impact-abstract-bg.png") center top / cover fixed no-repeat;
   }
   .leftPanel {
@@ -2144,7 +2633,7 @@ color:black;
     border: 0.2px solid black;
     width: 100%;
     display: block;
-    background: rgba(255, 255, 255, 0.68);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(173, 216, 230, 0.16));
     backdrop-filter: blur(4px);
   }
   .rightPanel {
@@ -2152,4 +2641,47 @@ color:black;
     display: none;
   }
  
+}
+@media (max-width: 760px) {
+  .homeCommunityAside,
+  .directoryGroupGrid,
+  .prizeLibraryGrid,
+  .quadGrid,
+  .rewardRulesGrid,
+  .homeStepGrid {
+    grid-template-columns: 1fr;
+  }
+  .homeSection,
+  .homeSplash,
+  .homePostcardSlider,
+  .homeTogetherTitle {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+  .directoryPage {
+    padding: 0.5em;
+  }
+  .directoryHeroPanel,
+  .directoryLayout {
+    grid-template-columns: 1fr;
+  }
+  .directoryHeroPanel {
+    align-items: stretch;
+    display: grid;
+  }
+  .directoryDetailPanel {
+    position: static;
+  }
+  .postcardSlide {
+    flex-basis: 86vw;
+  }
+  .btnsocialHolster {
+    justify-content: center;
+  }
+  .socialIconLabel {
+    max-width: 120px;
+  }
+  .rewardCard {
+    grid-template-columns: 44px 1fr;
+  }
 }

@@ -33,7 +33,7 @@ function SignUpForm({ onAuthSuccess, onNotify }) {
         method: "POST",
         body: JSON.stringify({
           ...formData,
-          userPoints: 0,
+          userPoints: 100,
           userBadgeTier: "Bronze",
         }),
       });
@@ -56,7 +56,7 @@ function SignUpForm({ onAuthSuccess, onNotify }) {
           <p className="authModalEyebrow">New Member</p>
           <h2 className="authModalTitle fontdiner-swanky-regular">Register To Join</h2>
           <p className="authModalCopy">
-            Create your profile, start with a Bronze badge, and begin collecting attendance points around Arlington.
+            Create your profile, start with a Bronze badge, and receive 100 opening Impact points.
           </p>
         </div>
         <div className="authBadgeStack">
@@ -66,7 +66,7 @@ function SignUpForm({ onAuthSuccess, onNotify }) {
           </div>
           <div>
             <span>Opening Points</span>
-            <strong>0</strong>
+            <strong>100</strong>
           </div>
         </div>
       </div>

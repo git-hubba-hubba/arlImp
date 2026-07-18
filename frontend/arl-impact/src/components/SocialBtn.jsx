@@ -8,6 +8,9 @@ function SocialBtn({ btnObj, onSelect }) {
           className="iconSocial"
           onClick={() => onSelect(btnObj.name)}
         />
+        <button className="socialIconLabel" type="button" onClick={() => onSelect(btnObj.name)}>
+          {btnObj.name}
+        </button>
       </div>
     </>
   );

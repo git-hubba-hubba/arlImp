@@ -129,7 +129,22 @@ const authors = [
 ];
 
 const generateCategoryPosts = (category) => {
-  const categoryData = categoryPostData[category] || categoryPostData.Forum;
+  const categoryData = categoryPostData[category] || {
+    images: categoryPostData.Forum.images,
+    titles: [
+      `${category} Update: What Members Should Know`,
+      `Arlington Spotlight: ${category}`,
+      `Community Notes For ${category}`,
+      `New ${category} Opportunities This Week`,
+      `Member Conversation: ${category}`,
+    ],
+    bodies: [
+      `A sample ${category.toLowerCase()} post for the Impact Arlington feed while the live API source is being finalized.`,
+      `This placeholder keeps the feed active and organized around ${category.toLowerCase()} content.`,
+      `Members can use this space to follow updates, offers, resources, and community conversations tied to ${category.toLowerCase()}.`,
+      `A dummy data note prepared for the ${category.toLowerCase()} category.`,
+    ],
+  };
 
   return Array.from({ length: 20 }, (_, index) => ({
     _id: `generated-${category}-${index}`,
@@ -195,6 +210,19 @@ function FeedMain({ currentUser }) {
       postBody: "",
     });
     setEditingPostId(null);
+  };
+
+  const handleCreateVideo = () => {
+    setPostForm({
+      postTitle: "",
+      postAuthor: currentUser?.username || "",
+      postImage: "",
+      postCategory: "Videos",
+      postBody: "",
+    });
+    setEditingPostId(null);
+    setStatus("");
+    setIsPostModalOpen(true);
   };
 
   const handlePostSubmit = async (e) => {
@@ -358,24 +386,40 @@ function FeedMain({ currentUser }) {
 
   const buttonCluster = [
     {
-      icon: "https://cdn-icons-png.flaticon.com/512/44/44386.png",
-      name: "Global Issues",
+      icon: "https://cdn-icons-png.flaticon.com/512/2331/2331941.png",
+      name: "Deals & Discounts",
     },
     {
-      icon: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Education%2C_Studying%2C_University%2C_Alumni_-_icon.png",
-      name: "Education",
+      icon: "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+      name: "My Rewards",
+    },
+    {
+      icon: "https://cdn-icons-png.flaticon.com/512/1179/1179120.png",
+      name: "Videos",
+    },
+    {
+      icon: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+      name: "Know Your City",
+    },
+    {
+      icon: "https://cdn-icons-png.flaticon.com/512/3135/3135706.png",
+      name: "Impact Your Finances",
+    },
+    {
+      icon: "https://cdn-icons-png.flaticon.com/512/2966/2966327.png",
+      name: "Impact Your Health",
+    },
+    {
+      icon: "https://cdn-icons-png.flaticon.com/512/1006/1006771.png",
+      name: "Blog",
+    },
+    {
+      icon: "https://cdn-icons-png.flaticon.com/512/1828/1828884.png",
+      name: "Reward point rules",
     },
     {
       icon: "https://cdn-icons-png.flaticon.com/512/4117/4117763.png",
       name: "Political",
-    },
-    {
-      icon: "https://cdn-icons-png.flaticon.com/512/72/72762.png",
-      name: "Finance",
-    },
-    {
-      icon: "https://static.thenounproject.com/png/1679138-200.png",
-      name: "Forum",
     },
   ];
   return (
@@ -451,6 +495,13 @@ function FeedMain({ currentUser }) {
             }}
           >
             Create Post
+          </button>
+          <button
+            className="signUp formSubmit videoCreateButton"
+            type="button"
+            onClick={handleCreateVideo}
+          >
+            Create Video
           </button>
           {status && !isPostModalOpen && <p className="formStatus">{status}</p>}
         </div>

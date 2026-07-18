@@ -63,6 +63,9 @@ function Nav({setCurrentBoard, onOpenModal, currentUser, onUserUpdate, onLogout,
               setCurrentBoard("Member")
             }}>Members</div>
             <div className="navGuide" onClick={()=>{
+              setCurrentBoard("Directory")
+            }}>Directory</div>
+            <div className="navGuide" onClick={()=>{
               setCurrentBoard("Events")
             }}>Local</div>
           </div>

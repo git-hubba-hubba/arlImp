@@ -14,6 +14,7 @@ const defaultUser = {
   userOccupation: "Community Member",
   userPoints: 0,
   userBadgeTier: "Guest",
+  profileHeaderMedia: "",
 };
 
 const EVENT_TICKET_IMAGE =
@@ -41,6 +42,7 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
     userOccupation: user.userOccupation || user.userDesc || "",
     userPoints: user.userPoints || 0,
     userBadgeTier: user.userBadgeTier || "Bronze",
+    profileHeaderMedia: user.profileHeaderMedia || "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isRewardsOpen, setIsRewardsOpen] = useState(false);
@@ -89,7 +91,24 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
 
   return (
     <div className={`profileModalTemplate profileTier-${tierClass}`}>
-      <section className="profileModalHero">
+      <section
+        className={`profileModalHero ${formData.profileHeaderMedia ? "profileModalHeroCustom" : ""}`}
+        style={
+          formData.profileHeaderMedia && !isVideoMedia(formData.profileHeaderMedia)
+            ? { backgroundImage: `linear-gradient(rgba(173, 216, 230, 0.76), rgba(255, 255, 255, 0.82)), url("${formData.profileHeaderMedia}")` }
+            : undefined
+        }
+      >
+        {isVideoMedia(formData.profileHeaderMedia) && (
+          <video
+            className="profileHeaderVideo"
+            muted
+            autoPlay
+            loop
+            playsInline
+            src={formData.profileHeaderMedia}
+          />
+        )}
         {isVideoMedia(formData.userImage) ? (
           <video
             className="profileModalImage"
@@ -125,6 +144,13 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
             >
               My Rewards
             </button>
+            <MediaUploadButton
+              accept="image/*,video/*"
+              label="Change Header"
+              name="profileHeaderMedia"
+              onChange={handleChange}
+              value={formData.profileHeaderMedia}
+            />
             {loggedUserInfo && (
               <button className="signUp profileAction" type="button" onClick={onLogout}>
                 Log Out
@@ -177,7 +203,12 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
           />
           <input className="frmSU" name="userOccupation" value={formData.userOccupation} onChange={handleChange} placeholder="Occupation" />
           <input className="frmSU" name="userPoints" value={formData.userPoints} onChange={handleChange} placeholder="Points" type="number" />
-          <input className="frmSU" name="userBadgeTier" value={formData.userBadgeTier} onChange={handleChange} placeholder="Badge Tier" />
+          <select className="frmSU" name="userBadgeTier" value={formData.userBadgeTier} onChange={handleChange}>
+            <option value="Bronze">Bronze</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+          </select>
           <button className="signUp formSubmit" type="submit" disabled={isSaving}>
             {isSaving ? "Saving..." : "Save Profile"}
           </button>

@@ -16,7 +16,7 @@ function PostFormModal({
         <input className="frmSU" name="postAuthor" value={postForm.postAuthor} onChange={onChange} placeholder="Author" required />
         <MediaUploadButton
           accept="image/*,video/*"
-          label="Upload Post Media"
+          label={postForm.postCategory === "Videos" ? "Upload Video" : "Upload Post Media"}
           name="postImage"
           onChange={onChange}
           value={postForm.postImage}

@@ -36,6 +36,18 @@ const defaultRewards = [
   },
 ];
 
+const defaultPointRules = [
+  { id: "register", action: "Register on site", points: 100 },
+  { id: "website", action: "Visit website", points: 25 },
+  { id: "business-visit", action: "Visit business", points: 50 },
+  { id: "purchase", action: "Make purchase from business", points: 100 },
+  { id: "video", action: "Watch video", points: 25 },
+  { id: "event", action: "Attend event", points: 100 },
+  { id: "vincent", action: "Find Vincent", points: 500 },
+];
+
+const badgeTiers = ["Bronze", "Silver", "Gold", "Platinum"];
+
 function RewardsDashboard({ rewards = defaultRewards, userPoints = 0, onRedeem }) {
   const points = Number(userPoints) || 0;
   const sortedRewards = [...rewards].sort(
@@ -74,6 +86,30 @@ function RewardsDashboard({ rewards = defaultRewards, userPoints = 0, onRedeem }
           <strong>Top tier reached</strong>
         </div>
       )}
+
+      <section className="rewardRulesPanel">
+        <header>
+          <p className="profileModalEyebrow">Earn Points</p>
+          <h4>Impact Reward points scan here.</h4>
+        </header>
+        <div className="rewardRulesGrid">
+          {defaultPointRules.map((rule) => (
+            <div className="rewardRule" key={rule.id}>
+              <span>{rule.action}</span>
+              <strong>{rule.points} pts</strong>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="badgeTierPanel">
+        <p className="profileModalEyebrow">Badges</p>
+        <div className="badgeTierList">
+          {badgeTiers.map((tier) => (
+            <span key={tier}>{tier}</span>
+          ))}
+        </div>
+      </section>
 
       <div className="rewardsRoadmap">
         {sortedRewards.map((reward) => {
