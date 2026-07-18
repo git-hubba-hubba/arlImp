@@ -2585,15 +2585,15 @@ color:black;
   }
   .midPanel {
     border: 0.2px solid black;
-    width: 70%;
+    width: 100%;
     display: block;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(173, 216, 230, 0.12));
     backdrop-filter: blur(4px);
   }
   .rightPanel {
     /* border: solid blue; */
-    display: block;
-    width: 30%;
+    display: none;
+    width: 0%;
   }
 }
 @media (max-width: 1250px) {
@@ -2608,15 +2608,15 @@ color:black;
   }
   .midPanel {
     border: 0.2px solid black;
-    width: 70%;
+    width: 100%;
     display: block;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.66), rgba(173, 216, 230, 0.14));
     backdrop-filter: blur(4px);
   }
   .rightPanel {
     border: solid white;
-    display: block;
-    width: 30%;
+    display: none;
+    width: 0%;
   }
 }
 @media (max-width: 850px) {
