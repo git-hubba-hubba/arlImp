@@ -1,7 +1,50 @@
+import { useState } from "react";
 import Calendar from "./Calendar";
 import NotificationModal from "./NotificationModal";
 import ProfileModal from "./ProfileModal";
 function Nav({setCurrentBoard, onOpenModal, currentUser, onUserUpdate, onLogout, notifications = []}) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navActions = [
+    {
+      label: "Calendar",
+      icon: "https://cdn-icons-png.flaticon.com/512/42/42371.png",
+      onSelect: () =>
+        onOpenModal({
+          title: "Event Calendar",
+          component: Calendar,
+          componentProps: { currentUser },
+        }),
+    },
+    {
+      label: "Notifications",
+      icon: "https://cdn-icons-png.flaticon.com/512/565/565422.png",
+      onSelect: () =>
+        onOpenModal({
+          title: "Notifications",
+          component: NotificationModal,
+          componentProps: { notifications },
+        }),
+    },
+    {
+      label: "Profile",
+      icon: "https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png",
+      onSelect: () =>
+        onOpenModal({
+          title: "Profile",
+          component: ProfileModal,
+          componentProps: {
+            loggedUserInfo: currentUser,
+            onUserUpdate,
+            onLogout,
+          },
+        }),
+    },
+  ];
+
+  const handleMenuAction = (action) => {
+    action.onSelect();
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
@@ -24,52 +67,46 @@ function Nav({setCurrentBoard, onOpenModal, currentUser, onUserUpdate, onLogout,
             }}>Local</div>
           </div>
           <div className="nFold3">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/42/42371.png"
-              alt="Calendar"
-              className="navIcon"
-              onClick={() =>
-                onOpenModal({
-                  title: "Event Calendar",
-                  component: Calendar,
-                  componentProps: { currentUser },
-                })
-              }
-            />
-            {/* Event Calendar */}
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/565/565422.png"
-              alt="Notifications"
-              className="navIcon"
-              onClick={() =>
-                onOpenModal({
-                  title: "Notifications",
-                  component: NotificationModal,
-                  componentProps: { notifications },
-                })
-              }
-            />
-            {/* Notifications */}
-            <img
-              src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png"
-              alt="Profile"
-              className="navIcon"
-              onClick={() =>
-                onOpenModal({
-                  title: "Profile",
-                  component: ProfileModal,
-                  componentProps: {
-                    loggedUserInfo: currentUser,
-                    onUserUpdate,
-                    onLogout,
-                  },
-                })
-              }
-            />
-            {/* Profile */}
+            {navActions.map((action) => (
+              <img
+                key={action.label}
+                src={action.icon}
+                alt={action.label}
+                className="navIcon"
+                onClick={action.onSelect}
+              />
+            ))}
+            <div className="navHamburgerWrap">
+              <button
+                className="navHamburger"
+                type="button"
+                aria-expanded={isMenuOpen}
+                aria-label="Open navigation options"
+                onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+              {isMenuOpen && (
+                <div className="navDropdown">
+                  {navActions.map((action) => (
+                    <button
+                      className="navDropdownItem"
+                      key={action.label}
+                      type="button"
+                      onClick={() => handleMenuAction(action)}
+                    >
+                      <img src={action.icon} alt="" className="navDropdownIcon" />
+                      <span>{action.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <h2 className="fontdiner-swanky-regular"style={{color:'black'}}>United by Purpose, Strengthened by Community</h2>
+        <h2 className=""style={{color:'black',padding: "1em", fontFamily:"serif"}}>Welcome to Impact Arlington Texas <br />Where we come together as a community </h2>
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import MediaUploadButton from "./MediaUploadButton";
 
 function EventFormModal({
   editingEventId,
@@ -14,7 +15,13 @@ function EventFormModal({
         <input className="frmSU" name="eventName" value={eventForm.eventName} onChange={onChange} placeholder="Event Name" required />
         <input className="frmSU" name="eventLocation" value={eventForm.eventLocation} onChange={onChange} placeholder="Location" required />
         <input className="frmSU" name="eventDate" value={eventForm.eventDate} onChange={onChange} type="date" required />
-        <input className="frmSU" name="eventImage" value={eventForm.eventImage} onChange={onChange} placeholder="Event Image URL" />
+        <MediaUploadButton
+          accept="image/*,video/*"
+          label="Upload Event Media"
+          name="eventImage"
+          onChange={onChange}
+          value={eventForm.eventImage}
+        />
         <input className="frmSU" name="attendanceCode" value={eventForm.attendanceCode} onChange={onChange} placeholder="Attendance Code" />
         <input className="frmSU" name="attendancePoints" value={eventForm.attendancePoints} onChange={onChange} placeholder="Attendance Points" type="number" min="0" />
         <textarea className="frmSU crudTextarea" name="eventDescription" value={eventForm.eventDescription} onChange={onChange} placeholder="Description" required />

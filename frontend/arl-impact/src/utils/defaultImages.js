@@ -4,6 +4,7 @@ export const DEFAULT_EVENT_IMAGE =
 export function getEventImageSrc(event) {
   const image = event.eventImage || event.eventImg || DEFAULT_EVENT_IMAGE;
 
+  if (String(image).startsWith("data:")) return image;
   if (!event.eventImage || !event.updatedAt) return image;
 
   const separator = image.includes("?") ? "&" : "?";

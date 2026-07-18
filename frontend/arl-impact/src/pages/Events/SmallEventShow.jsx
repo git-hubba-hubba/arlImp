@@ -1,6 +1,7 @@
 import React from "react";
 import { formatMonthDayYear } from "../../utils/dateFormat";
 import { DEFAULT_EVENT_IMAGE, getEventImageSrc } from "../../utils/defaultImages";
+import { isVideoMedia } from "../../utils/media";
 
 function SmallEventShow({
   attendanceCode,
@@ -18,14 +19,18 @@ function SmallEventShow({
   return (
     <>
       <div className="smEventShowContainer" onClick={onOpenModal}>
-        <img
-          src={eventImage}
-          alt={eventObj.eventName}
-          className="smShowImg"
-          onError={(e) => {
-            e.currentTarget.src = DEFAULT_EVENT_IMAGE;
-          }}
-        />
+        {isVideoMedia(eventImage) ? (
+          <video className="smShowImg" muted src={eventImage} />
+        ) : (
+          <img
+            src={eventImage}
+            alt={eventObj.eventName}
+            className="smShowImg"
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_EVENT_IMAGE;
+            }}
+          />
+        )}
 
         <p className="smTopicSay">{eventObj.eventName}</p>
 

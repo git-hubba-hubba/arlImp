@@ -1,5 +1,6 @@
 import { formatMonthDayYear } from "../utils/dateFormat";
 import { DEFAULT_EVENT_IMAGE, getEventImageSrc } from "../utils/defaultImages";
+import { isVideoMedia } from "../utils/media";
 
 function getEventMood(eventDate) {
   if (!eventDate) return "open";
@@ -30,14 +31,22 @@ function EventModal({ event, onOpenComments }) {
   return (
     <div className={`eventModalTemplate eventModal-${eventMood}`}>
       <section className="eventModalHero">
-        <img
-          src={eventImage}
-          alt={event.eventName}
-          className="eventModalImage"
-          onError={(e) => {
-            e.currentTarget.src = DEFAULT_EVENT_IMAGE;
-          }}
-        />
+        {isVideoMedia(eventImage) ? (
+          <video
+            className="eventModalImage"
+            controls
+            src={eventImage}
+          />
+        ) : (
+          <img
+            src={eventImage}
+            alt={event.eventName}
+            className="eventModalImage"
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_EVENT_IMAGE;
+            }}
+          />
+        )}
         <div className="eventModalHeroCopy">
           <p className="eventModalEyebrow">{getEventMoodLabel(eventMood)}</p>
           <h2 className="eventModalTitle fontdiner-swanky-regular">{event.eventName}</h2>

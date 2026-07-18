@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { apiRequest } from "../api";
+import MediaUploadButton from "./MediaUploadButton";
 
 const initialForm = {
   username: "",
@@ -97,11 +98,10 @@ function SignUpForm({ onAuthSuccess, onNotify }) {
             />
           </label>
           <label className="authField authFieldWide">
-            <span>Profile Image URL</span>
-            <input
-              type="text"
-              className="frmSU"
-              placeholder="Optional image link"
+            <span>Profile Media</span>
+            <MediaUploadButton
+              accept="image/*,video/*"
+              label="Upload Profile Media"
               name="userImage"
               value={formData.userImage}
               onChange={handleChange}

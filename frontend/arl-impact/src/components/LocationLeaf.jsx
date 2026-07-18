@@ -25,6 +25,9 @@ const defaultBusinessIcon = L.divIcon({
   iconAnchor: [9, 9],
 });
 
+const hasCoordinates = (location) =>
+  typeof location.lat === "number" && typeof location.lng === "number";
+
 function getBusinessIcon(business) {
   if (!business.iconUrl) return defaultBusinessIcon;
 
@@ -41,6 +44,11 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
 
+  const mappedBusinesses = useMemo(
+    () => businesses.filter((business) => hasCoordinates(business)),
+    [businesses]
+  );
+
   const arlingtonDistanceMiles = useMemo(() => {
     if (!userLocation) return null;
 
@@ -48,15 +56,15 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
   }, [userLocation]);
 
   const businessesWithDistance = useMemo(() => {
-    if (!userLocation) return businesses;
+    if (!userLocation) return mappedBusinesses;
 
-    return businesses
+    return mappedBusinesses
       .map((business) => ({
         ...business,
         distanceMiles: calculateDistanceMiles(userLocation, business),
       }))
       .sort((leftBusiness, rightBusiness) => leftBusiness.distanceMiles - rightBusiness.distanceMiles);
-  }, [businesses, userLocation]);
+  }, [mappedBusinesses, userLocation]);
 
   const selectedBusinessWithDistance = useMemo(() => {
     if (!selectedBusiness || !userLocation) return selectedBusiness;
@@ -177,7 +185,7 @@ function LocationLeaf({ businesses = [], onUserLocationChange }) {
             >
               <Popup>
                 <strong>{business.name}</strong>
-                {business.category && <p>{business.category}</p>}
+                {(business.category || business.type) && <p>{business.category || business.type}</p>}
                 {business.address && <p>{business.address}</p>}
                 {typeof business.distanceMiles === "number" && (
                   <p>{formatDistance(business.distanceMiles)} from you</p>

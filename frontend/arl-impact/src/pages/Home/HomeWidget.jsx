@@ -9,6 +9,10 @@ function getCreatedById(event) {
   return event.createdBy._id || event.createdBy.id || "";
 }
 
+function hasCoordinates(location) {
+  return typeof location.lat === "number" && typeof location.lng === "number";
+}
+
 function HomeWidget({ businesses = [], currentUser, userLocation }) {
   const [events, setEvents] = useState([]);
   const [status, setStatus] = useState("");
@@ -39,6 +43,7 @@ function HomeWidget({ businesses = [], currentUser, userLocation }) {
     if (!userLocation) return [];
 
     return businesses
+      .filter((business) => hasCoordinates(business))
       .map((business) => ({
         ...business,
         distanceMiles: calculateDistanceMiles(userLocation, business),
@@ -87,8 +92,8 @@ function HomeWidget({ businesses = [], currentUser, userLocation }) {
         {!userLocation && (
           <p className="homeWidgetEmpty">Use Location Leaf to activate location.</p>
         )}
-        {userLocation && businesses.length === 0 && (
-          <p className="homeWidgetEmpty">Add business objects to show nearby businesses.</p>
+        {userLocation && businesses.filter((business) => hasCoordinates(business)).length === 0 && (
+          <p className="homeWidgetEmpty">Add coordinates to show nearby locations.</p>
         )}
         {nearbyBusinesses.map((business) => (
           <article className="homeWidgetItem" key={business.id || business.name}>

@@ -33,6 +33,8 @@ function Home({ onAuthSuccess, onNotify, onOpenModal }) {
   ];
   return (
     <>
+    {/* Add Carousel  for Images in Homepage */}
+
       <JoinComp
         onSignUp={() =>
           onOpenModal?.({
@@ -62,7 +64,7 @@ function Home({ onAuthSuccess, onNotify, onOpenModal }) {
       <BusinessQuad />
       
 
-      <div className="envisionContainer">
+      {/* <div className="envisionContainer">
         <h1 className="envisionTxt">
           <span className="spamWord fontdiner-swanky-regular">Envision </span> a
           community where Giving, Sharing and Caring happens. <br />
@@ -84,7 +86,7 @@ function Home({ onAuthSuccess, onNotify, onOpenModal }) {
           benefits. YES EVERYONE! That’s the vision, now let’s work to make it a
           reality.
         </h1>
-      </div>
+      </div> */}
       <iframe
         width="100%"
         height="315"

@@ -1,3 +1,5 @@
+import { isVideoMedia } from "../utils/media";
+
 function PostMain({
   postObj,
   likeCount = 0,
@@ -14,7 +16,14 @@ function PostMain({
     <>
       <div className="singlePost">
         <div className="spScreen">
-          {postImage && (
+          {postImage && isVideoMedia(postImage) && (
+            <video
+              className="postImgContent"
+              controls
+              src={postImage}
+            />
+          )}
+          {postImage && !isVideoMedia(postImage) && (
             <img
               src={postImage}
               alt=""

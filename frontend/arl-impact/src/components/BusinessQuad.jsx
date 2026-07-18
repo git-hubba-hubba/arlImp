@@ -1,6 +1,13 @@
 import {React,useState} from "react";
 import QuadSlice from "./QuadSlice";
 
+
+
+
+// Add Church Members and Impact 
+
+
+
 function BusinessQuad() {
 const [currentDisplay, setCurrentDisplay] =useState("")
   let quadObjs = [

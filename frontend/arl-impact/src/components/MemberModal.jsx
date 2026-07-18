@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { saveDirectMessage } from "../utils/directMessages";
+import { isVideoMedia } from "../utils/media";
 
 const DEFAULT_MEMBER_IMAGE =
   "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80";
@@ -52,7 +53,11 @@ function MemberModal({ currentUser, member, onNotify }) {
   return (
     <div className="memberModalTemplate">
       <section className="memberModalHero">
-        <img src={memberImage} alt={memberName} className="memberModalImage" />
+        {isVideoMedia(memberImage) ? (
+          <video src={memberImage} className="memberModalImage" controls />
+        ) : (
+          <img src={memberImage} alt={memberName} className="memberModalImage" />
+        )}
         <div className="memberModalHeroCopy">
           <p className="memberModalEyebrow">{impactLabel}</p>
           <h2 className="memberModalName fontdiner-swanky-regular">{memberName}</h2>

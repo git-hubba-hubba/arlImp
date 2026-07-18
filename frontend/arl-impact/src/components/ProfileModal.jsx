@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { apiRequest } from "../api";
 import HomeWidget from "../pages/Home/HomeWidget";
+import { isVideoMedia } from "../utils/media";
+import MediaUploadButton from "./MediaUploadButton";
+import Modal from "./Modal";
+import RewardsDashboard from "./RewardsDashboard";
 
 const defaultUser = {
   username: "Guest User",
@@ -39,6 +43,7 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
     userBadgeTier: user.userBadgeTier || "Bronze",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [isRewardsOpen, setIsRewardsOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const attendedEvents = user.attendedEvents || [];
@@ -85,11 +90,19 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
   return (
     <div className={`profileModalTemplate profileTier-${tierClass}`}>
       <section className="profileModalHero">
-        <img
-          src={formData.userImage || defaultUser.userImage}
-          alt={formData.username}
-          className="profileModalImage"
-        />
+        {isVideoMedia(formData.userImage) ? (
+          <video
+            className="profileModalImage"
+            controls
+            src={formData.userImage}
+          />
+        ) : (
+          <img
+            src={formData.userImage || defaultUser.userImage}
+            alt={formData.username}
+            className="profileModalImage"
+          />
+        )}
         <div className="profileModalIntro">
           <p className="profileModalEyebrow">{formData.userBadgeTier}</p>
           <h2 className="profileModalName fontdiner-swanky-regular">
@@ -104,6 +117,13 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
               onClick={() => setIsEditing(!isEditing)}
             >
               {isEditing ? "Cancel Edit" : "Edit Profile"}
+            </button>
+            <button
+              className="signUp profileAction"
+              type="button"
+              onClick={() => setIsRewardsOpen(true)}
+            >
+              My Rewards
             </button>
             {loggedUserInfo && (
               <button className="signUp profileAction" type="button" onClick={onLogout}>
@@ -148,7 +168,13 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
         <form className="profileEditForm profileEditPanel" onSubmit={handleSubmit}>
           <input className="frmSU" name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
           <input className="frmSU" name="userEmail" value={formData.userEmail} onChange={handleChange} placeholder="Email" type="email" />
-          <input className="frmSU" name="userImage" value={formData.userImage} onChange={handleChange} placeholder="Profile Image URL" />
+          <MediaUploadButton
+            accept="image/*,video/*"
+            label="Upload Profile Media"
+            name="userImage"
+            onChange={handleChange}
+            value={formData.userImage}
+          />
           <input className="frmSU" name="userOccupation" value={formData.userOccupation} onChange={handleChange} placeholder="Occupation" />
           <input className="frmSU" name="userPoints" value={formData.userPoints} onChange={handleChange} placeholder="Points" type="number" />
           <input className="frmSU" name="userBadgeTier" value={formData.userBadgeTier} onChange={handleChange} placeholder="Badge Tier" />
@@ -181,6 +207,13 @@ function ProfileModal({ loggedUserInfo, onUserUpdate, onLogout }) {
           )}
         </div>
       </section>
+      <Modal
+        isOpen={isRewardsOpen}
+        onClose={() => setIsRewardsOpen(false)}
+        title="My Rewards"
+        component={RewardsDashboard}
+        componentProps={{ userPoints: formData.userPoints }}
+      />
     </div>
   );
 }

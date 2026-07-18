@@ -1,4 +1,5 @@
 import React from 'react'
+import { isVideoMedia } from '../../utils/media';
 function MemberBox({memObj, onOpenModal}) {
   const memberName = memObj.username || memObj.name;
   const memberImage = memObj.userImage || memObj.img;
@@ -10,7 +11,11 @@ function MemberBox({memObj, onOpenModal}) {
         <div className="boxMem" onClick={onOpenModal}>
             <p className="namer fontdiner-swanky-regular">{memberName}</p>
            <div className="bmLeft">
-            <img src={memberImage} alt="" className="boxImg" />
+            {isVideoMedia(memberImage) ? (
+              <video src={memberImage} className="boxImg" muted />
+            ) : (
+              <img src={memberImage} alt="" className="boxImg" />
+            )}
             </div> 
             <p>{memberTier}</p>
             <p className="namer fontdiner-swanky-regular">{memberOccupation}</p>

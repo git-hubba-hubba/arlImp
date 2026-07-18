@@ -270,6 +270,8 @@ body {
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(8px);
   border-bottom: 0.2px solid rgba(173, 216, 230, 0.8);
+  position: relative;
+  z-index: 5000;
 }
 .navTriFold {
   /* border: solid peru; */
@@ -295,6 +297,76 @@ body {
   /* width: 33%; */
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+  gap: 0.35em;
+  position: relative;
+}
+.navHamburgerWrap {
+  position: relative;
+}
+.navHamburger {
+  align-items: center;
+  background: white;
+  border: 0.2px solid lightblue;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  height: 30px;
+  justify-content: center;
+  padding: 5px;
+  width: 32px;
+}
+.navHamburger:hover {
+  background: lightblue;
+}
+.navHamburger span {
+  background: black;
+  display: block;
+  height: 2px;
+  width: 18px;
+}
+.navDropdown {
+  background: rgba(255, 255, 255, 0.96);
+  border: 0.2px solid lightblue;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  display: grid;
+  gap: 0.25em;
+  min-width: 180px;
+  padding: 0.45em;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 6000;
+}
+.navDropdownItem {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  gap: 0.65em;
+  padding: 0.65em;
+  text-align: left;
+  width: 100%;
+}
+.navDropdownItem:hover {
+  background: lightblue;
+}
+.navDropdownIcon {
+  height: 20px;
+  object-fit: contain;
+  width: 20px;
+}
+@media (max-width: 700px) {
+  .nFold3 > .navIcon {
+    display: none;
+  }
+
+  .navDropdown {
+    right: 0;
+  }
 }
 .profileWidget {
   border: 0.2px solid black;
@@ -1328,6 +1400,28 @@ body {
   outline: none;
   box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.18);
 }
+.mediaUploadControl {
+  align-items: center;
+  border: 0.2px solid lightblue;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75em;
+  padding: 0.75em;
+  background: rgba(255, 255, 255, 0.78);
+}
+.mediaUploadInput {
+  display: none;
+}
+.mediaUploadButton,
+.mediaUploadButton:hover {
+  margin: 0;
+  width: auto;
+}
+.mediaUploadStatus {
+  color: peru;
+  font-size: 0.85rem;
+}
 .formSubmit {
   margin: 0.5em;
 }
@@ -1592,6 +1686,119 @@ body {
   background: lightblue;
   border-radius: inherit;
   height: 100%;
+}
+.rewardsDashboard {
+  border: 0.2px solid lightblue;
+  display: grid;
+  gap: 0.85em;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.78);
+}
+.rewardsHeader {
+  align-items: center;
+  background: lightblue;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 1em;
+}
+.rewardsHeader h3 {
+  color: black;
+  margin: 0;
+}
+.rewardsPointBadge {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.82);
+  border: 0.2px solid white;
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+  padding: 0.75em;
+}
+.rewardsPointBadge span {
+  color: peru;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+.rewardsPointBadge strong {
+  color: black;
+  font-size: 0.82rem;
+}
+.rewardsNextMilestone {
+  border: 0.2px solid lightblue;
+  padding: 0.75em;
+}
+.rewardsNextMilestone span {
+  color: peru;
+  display: block;
+  font-size: 0.82rem;
+}
+.rewardsNextMilestone strong {
+  color: black;
+}
+.rewardsRoadmap {
+  display: grid;
+  gap: 0.85em;
+}
+.rewardCard {
+  align-items: stretch;
+  display: grid;
+  gap: 0.75em;
+  grid-template-columns: 52px 1fr;
+}
+.rewardMarker {
+  align-items: center;
+  background: #ececec;
+  border: 0.2px solid lightblue;
+  color: black;
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: bold;
+  justify-content: center;
+}
+.rewardUnlocked .rewardMarker {
+  background: lightblue;
+}
+.rewardContent {
+  border: 0.2px solid lightblue;
+  padding: 0.85em;
+  background: rgba(255, 255, 255, 0.8);
+}
+.rewardCardHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+}
+.rewardCardHeader h4 {
+  color: black;
+  margin: 0;
+}
+.rewardCardHeader span {
+  color: peru;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.rewardProgressTrack {
+  background: #ececec;
+  border-radius: 999px;
+  height: 8px;
+  margin: 0.75em 0;
+  overflow: hidden;
+}
+.rewardProgressFill {
+  background: lightblue;
+  border-radius: inherit;
+  height: 100%;
+}
+.rewardRedeemButton,
+.rewardRedeemButton:hover {
+  width: auto;
+}
+.rewardRedeemButton:disabled {
+  border-color: #b8b8b8;
+  color: #777;
+  cursor: not-allowed;
 }
 .profileEditPanel {
   border: 0.2px solid lightblue;
