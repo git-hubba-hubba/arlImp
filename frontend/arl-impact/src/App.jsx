@@ -91,7 +91,7 @@ function App() {
         componentProps={activeModal?.componentProps}
       />
       <div className="masterJmwofford">
-        <div className="leftPanel">
+        {/* <div className="leftPanel">
           {currentBoard === "Home" ? <><HomeFilter /></> : null}
           {currentBoard === "Feed" ? (
             <>
@@ -109,7 +109,7 @@ function App() {
             </>
           ) : null}
           {currentBoard === "Directory" ? <HomeFilter /> : null}
-        </div>
+        </div> */}
 
         <div className="midPanel">
           {currentBoard === "Home" ? (
